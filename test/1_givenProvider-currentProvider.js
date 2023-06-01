@@ -16,10 +16,10 @@ describe('Web3.providers.givenProvider', function () {
 
         });
 
-        it('when instantiating Platon', function () {
-            var Platon = require('../packages/web3-eth/src');
-            console.log("Platon.givenProvider:", Platon.givenProvider)
-        //    assert.deepEqual(Platon.givenProvider, global.web3.currentProvider);
+        it('when instantiating Bubble', function () {
+            var bub = require('../packages/web3-eth/src');
+            console.log("bub.givenProvider:", bub.givenProvider)
+        //    assert.deepEqual(bub.givenProvider, global.web3.currentProvider);
         });
     });
 });

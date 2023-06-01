@@ -110,7 +110,7 @@ var Contract = function Contract(jsonInterface, address, options) {
 
             if (curInterface.type === "Event") {
                 item.type = "event";
-                item.anonymous = false; // 目前 platon 不支持匿名事件，生成的 abi 文件中 anonymous 为 false
+                item.anonymous = false; // 目前 bubble 不支持匿名事件，生成的 abi 文件中 anonymous 为 false
                 for (let i = 0; i < curInterface.input.length; i++) {
                     curInterface.input[i].indexed = (i + 1) <= curInterface.topic; // 转为跟solidity结构一致的indexed
                 }
@@ -861,7 +861,7 @@ Contract.prototype._on = function () {
                 }
             }
         },
-        type: 'platon',
+        type: 'bubble',
         requestManager: this._requestManager
     });
     subscription.subscribe('logs', subOptions.params, subOptions.callback || function () { });
@@ -883,7 +883,7 @@ Contract.prototype.newFilter = function () {
 
     var newFilter = new Method({
         name: 'newFilter',
-        call: 'platon_newFilter',
+        call: 'bub_newFilter',
         params: 1,
         inputFormatter: [formatters.inputLogFormatter],
     });
@@ -909,7 +909,7 @@ Contract.prototype.getFilterLogs = function () {
 
     var getFilterLogs = new Method({
         name: 'getFilterLogs',
-        call: 'platon_getFilterLogs',
+        call: 'bub_getFilterLogs',
         params: 1,
     })
 
@@ -943,7 +943,7 @@ Contract.prototype.getPastEvents = function () {
 
     var getPastLogs = new Method({
         name: 'getPastLogs',
-        call: 'platon_getLogs',
+        call: 'bub_getLogs',
         params: 1,
         inputFormatter: [formatters.inputLogFormatter],
         outputFormatter: this._decodeEventABI.bind(subOptions.event)
@@ -1065,10 +1065,10 @@ Contract.prototype._executeMethod = function _executeMethod() {
 
         if (args.type === 'call') {
             payload.params.push(formatters.inputDefaultBlockNumberFormatter.call(this._parent, args.defaultBlock));
-            payload.method = 'platon_call';
+            payload.method = 'bub_call';
             payload.format = this._parent._decodeMethodReturn.bind(null, this._method.outputs);
         } else {
-            payload.method = 'platon_sendTransaction';
+            payload.method = 'bub_sendTransaction';
         }
 
         return payload;
@@ -1080,7 +1080,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
 
                 var estimateGas = (new Method({
                     name: 'estimateGas',
-                    call: 'platon_estimateGas',
+                    call: 'bub_estimateGas',
                     params: 1,
                     inputFormatter: [formatters.inputCallFormatter],
                     outputFormatter: utils.hexToNumber,
@@ -1098,7 +1098,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
 
                 var call = (new Method({
                     name: 'call',
-                    call: 'platon_call',
+                    call: 'bub_call',
                     params: 2,
                     inputFormatter: [formatters.inputCallFormatter, formatters.inputDefaultBlockNumberFormatter],
                     // add output formatter for decoding
@@ -1174,7 +1174,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
 
                 var sendTransaction = (new Method({
                     name: 'sendTransaction',
-                    call: 'platon_sendTransaction',
+                    call: 'bub_sendTransaction',
                     params: 1,
                     inputFormatter: [formatters.inputTransactionFormatter],
                     requestManager: _this._parent._requestManager,

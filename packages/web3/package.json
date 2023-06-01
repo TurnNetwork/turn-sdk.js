@@ -1,5 +1,5 @@
 {
-    "name": "@platonnetwork/web3",
+    "name": "@bubble/web3",
     "version": "0.16.1",
     "description": "Ethereum JavaScript API",
     "repository": "https://github.com/ethereum/web3.js",
@@ -54,8 +54,8 @@
         "web3-eth": "1.2.4",
         "web3-eth-personal": "1.2.4",
         "web3-net": "1.2.4",
-        "@platonnetwork/web3-utils": "0.16.1",
-        "@platonnetwork/web3-ppos": "0.16.1"
+        "@bubble/web3-utils": "0.16.1",
+        "@bubble/web3-ppos": "0.16.1"
     },
     "devDependencies": {
         "@definitelytyped/header-parser": "^0.0.133",

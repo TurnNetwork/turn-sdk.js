@@ -1,6 +1,6 @@
 var chai = require('chai');
 var assert = chai.assert;
-var Platon = require('../packages/web3-eth');
+var Bubble = require('../packages/web3-eth');
 var sha3 = require('../packages/web3-utils').sha3;
 var FakeIpcProvider = require('./helpers/FakeIpcProvider');
 var FakeHttpProvider = require('./helpers/FakeHttpProvider');
@@ -36,9 +36,9 @@ describe('contract', function () {
     describe('method.encodeABI', function () {
         it('should handle bytes32 arrays that only contain 1 byte', function () {
             var provider = new FakeIpcProvider();
-            var platon = new Platon(provider);
+            var bub = new Bubble(provider);
 
-            var contract = new platon.Contract(abi);
+            var contract = new bub.Contract(abi);
 
             var result = contract.methods.takesTwoBytes32('0x'.concat('a'.repeat(2)), '0x'.concat('b'.repeat(2))).encodeABI();
 
@@ -51,9 +51,9 @@ describe('contract', function () {
 
         it('should handle bytes32 arrays that are short 1 byte', function () {
             var provider = new FakeIpcProvider();
-            var platon = new Platon(provider);
+            var bub = new Bubble(provider);
 
-            var contract = new platon.Contract(abi);
+            var contract = new bub.Contract(abi);
 
             var result = contract.methods.takesTwoBytes32('0x'.concat('a'.repeat(62)), '0x'.concat('b'.repeat(62))).encodeABI();
 
@@ -66,9 +66,9 @@ describe('contract', function () {
 
         it('should handle bytes32 arrays that are full', function () {
             var provider = new FakeIpcProvider();
-            var platon = new Platon(provider);
+            var bub = new Bubble(provider);
 
-            var contract = new platon.Contract(abi);
+            var contract = new bub.Contract(abi);
 
             var result = contract.methods.takesTwoBytes32('0x'.concat('a'.repeat(64)), '0x'.concat('b'.repeat(64))).encodeABI();
 

@@ -27,4 +27,4 @@ var tests = [
     }
 ];
 
-testMethod.runTests(["platon", "personal"], method, tests);
+testMethod.runTests(["bub", "personal"], method, tests);

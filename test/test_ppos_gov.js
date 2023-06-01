@@ -12,7 +12,7 @@ var cfg = {
 
 
 const get_chainid = async function () {
-    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("platon_chainId",[]));
+    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("bub_chainId",[]));
     console.log("chainid:", chainid);
 }
 
@@ -26,15 +26,15 @@ let SubmitParamProposalGasPrice   = 20000 * 1000000000 // Min gas price for subm
 // 文本提案
 const test_2000 = async function () {
     let gasPrice = web3.utils.numberToHex(SubmitTextProposalGasPrice);
-    let gas = web3.utils.numberToHex(parseInt((await web3.platon.getBlock("latest")).gasLimit));
+    let gas = web3.utils.numberToHex(parseInt((await web3.bub.getBlock("latest")).gasLimit));
     let verifier = "3058ac78b0a05637218a417e562daaca2d640afb3d142ada765650cc0bed892d91d6e8128df0a59397ea051a2d91af5b532866f411811f4fd46de068ad0e168d"
     let pIDID = "pid"
 
     let params = [2000, web3.ppos.hexStrBuf(verifier), pIDID];
     cfg.gasPrice = gasPrice;
     cfg.gas = gas;
-    var hrp = await web3.platon.getAddressHrp()
-    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("platon_chainId",[]));
+    var hrp = await web3.bub.getAddressHrp()
+    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("bub_chainId",[]));
     web3.ppos.updateSetting({
         privateKey: cfg.privateKey,
         chainId: chainid,
@@ -50,7 +50,7 @@ const test_2000 = async function () {
 // 升级提案
 const test_2001 = async function () {
     let gasPrice = web3.utils.numberToHex(SubmitVersionProposalGasPrice);
-    let gas = web3.utils.numberToHex(parseInt((await web3.platon.getBlock("latest")).gasLimit));
+    let gas = web3.utils.numberToHex(parseInt((await web3.bub.getBlock("latest")).gasLimit));
     let verifier = "3058ac78b0a05637218a417e562daaca2d640afb3d142ada765650cc0bed892d91d6e8128df0a59397ea051a2d91af5b532866f411811f4fd46de068ad0e168d"
     let pIDID = "pid"
     let newVersion = 4096
@@ -60,8 +60,8 @@ const test_2001 = async function () {
         pIDID, web3.ppos.hexStrBuf(newVersion), endVotingRounds];
     cfg.gasPrice = gasPrice;
     cfg.gas = gas;
-    var hrp = await web3.platon.getAddressHrp()
-    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("platon_chainId",[]));
+    var hrp = await web3.bub.getAddressHrp()
+    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("bub_chainId",[]));
     web3.ppos.updateSetting({
         privateKey: cfg.privateKey,
         chainId: chainid,
@@ -77,7 +77,7 @@ const test_2001 = async function () {
 // 参数提案
 const test_2002 = async function () {
     let gasPrice = web3.utils.numberToHex(SubmitParamProposalGasPrice);
-    let gas = web3.utils.numberToHex(parseInt((await web3.platon.getBlock("latest")).gasLimit));
+    let gas = web3.utils.numberToHex(parseInt((await web3.bub.getBlock("latest")).gasLimit));
     let verifier = "3058ac78b0a05637218a417e562daaca2d640afb3d142ada765650cc0bed892d91d6e8128df0a59397ea051a2d91af5b532866f411811f4fd46de068ad0e168d"
     let pIDID = "pid"
     let module = "staking"
@@ -87,8 +87,8 @@ const test_2002 = async function () {
     let params = [2002, web3.ppos.hexStrBuf(verifier), pIDID, module, name, value];
     cfg.gasPrice = gasPrice;
     cfg.gas = gas;
-    var hrp = await web3.platon.getAddressHrp()
-    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("platon_chainId",[]));
+    var hrp = await web3.bub.getAddressHrp()
+    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("bub_chainId",[]));
     web3.ppos.updateSetting({
         privateKey: cfg.privateKey,
         chainId: chainid,
@@ -104,7 +104,7 @@ const test_2002 = async function () {
 // 取消提案
 const test_2005 = async function () {
     let gasPrice = web3.utils.numberToHex(SubmitParamProposalGasPrice);
-    let gas = web3.utils.numberToHex(parseInt((await web3.platon.getBlock("latest")).gasLimit));
+    let gas = web3.utils.numberToHex(parseInt((await web3.bub.getBlock("latest")).gasLimit));
     let verifier = "3058ac78b0a05637218a417e562daaca2d640afb3d142ada765650cc0bed892d91d6e8128df0a59397ea051a2d91af5b532866f411811f4fd46de068ad0e168d"
     let pIDID = "pid"
     let endVotingRounds = 10
@@ -115,8 +115,8 @@ const test_2005 = async function () {
 
     cfg.gasPrice = gasPrice;
     cfg.gas = gas;
-    var hrp = await web3.platon.getAddressHrp()
-    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("platon_chainId",[]));
+    var hrp = await web3.bub.getAddressHrp()
+    let chainid = web3.utils.toDecimal(await web3.ppos.rpc("bub_chainId",[]));
     web3.ppos.updateSetting({
         privateKey: cfg.privateKey,
         chainId: chainid,

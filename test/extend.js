@@ -8,11 +8,11 @@ var web3 = new Web3();
 var tests = [{
     methods: [{
         name: 'getGasPrice2',
-        call: 'platon_gasPrice',
+        call: 'bub_gasPrice',
         outputFormatter: web3.extend.formatters.outputBigNumberFormatter
     }, {
         name: 'getBalance',
-        call: 'platon_getBalance',
+        call: 'bub_getBalance',
         params: 2,
         inputFormatter: [web3.utils.toChecksumAddress, web3.extend.formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: web3.extend.formatters.outputBigNumberFormatter
@@ -21,11 +21,11 @@ var tests = [{
     property: 'admin',
     methods: [{
         name: 'getGasPrice3',
-        call: 'platon_gasPrice',
+        call: 'bub_gasPrice',
         outputFormatter: web3.extend.formatters.outputBigNumberFormatter
     }, {
         name: 'getBalance',
-        call: 'platon_getBalance',
+        call: 'bub_getBalance',
         params: 2,
         inputFormatter: [web3.utils.toChecksumAddress, web3.extend.formatters.inputDefaultBlockNumberFormatter],
         outputFormatter: web3.extend.formatters.outputBigNumberFormatter
@@ -39,7 +39,7 @@ var tests = [{
 }, {
     error: true,
     methods: [{
-        call: 'platon_gasPrice',
+        call: 'bub_gasPrice',
         outputFormatter: web3.extend.formatters.outputBigNumberFormatter
     }]
 }];

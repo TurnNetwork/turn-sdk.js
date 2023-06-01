@@ -1,6 +1,6 @@
 ## Web3.js Interface 
 
-Interact with nodes through web3 objects provided by web3.js. On the underlying implementation, it communicates with the local node through RPC calls. web3.js can connect to any PlatON node that exposes the RPC interface.
+Interact with nodes through web3 objects provided by web3.js. On the underlying implementation, it communicates with the local node through RPC calls. web3.js can connect to any Bubble node that exposes the RPC interface.
 
 ### Usage
 
@@ -8,8 +8,8 @@ First, make sure the nodeJS environment is successfully installed locally. `WEB3
 
 Then you can integrate client-sdk-js into the project through package management tools such as npm or yarn, the steps are as follows:
 
-- npm: `npm i @platonnetwork/web3`
-- yarn: `yarn i @platonnetwork/web3`
+- npm: `npm i @bubble/web3`
+- yarn: `yarn i @bubble/web3`
 
 
 Create a web3 instance and set up a provider. You can refer to the following code:
@@ -21,7 +21,7 @@ var Web3 = require('web3');
 var web3 = new Web3('http://127.0.0.1:6789');
 console.log(web3);
 > {
-    platon: ... ,
+    bub: ... ,
     utils: ...,
     ppos: ...,
     ...
@@ -72,16 +72,16 @@ Returns:
 
 `Object`: A list of module constructors:
 
-*  `Platon` - Function: The PlatON module for interacting with the PlatON network see web3.platon for more.
-*  `Net` - Function: The Net module for interacting with network properties see web3.platon.net for more.
-*  `Personal` - Function: The Personal module for interacting with the PlatON accounts see web3.platon.personal for more.
+*  `bub` - Function: The Bubble module for interacting with the Bubble network see web3.bub for more.
+*  `Net` - Function: The Net module for interacting with network properties see web3.bub.net for more.
+*  `Personal` - Function: The Personal module for interacting with the Bubble accounts see web3.bub.personal for more.
 
 Example:
 
 ```js
 web3.modules
 > {
-    Platon: Platon function(provider),
+    bub: bub function(provider),
     Net: Net function(provider),
     Personal: Personal function(provider)
 }
@@ -97,11 +97,11 @@ Method:
 
 ```
 web3.setProvider(myProvider)
-web3.platon.setProvider(myProvider)
+web3.bub.setProvider(myProvider)
 ...
 ```
 
-Notes: When called on the umbrella package web3 it will also set the provider for all sub modules web3.platon, web3.shh, etc EXCEPT web3.bzz which needs a separate provider at all times.
+Notes: When called on the umbrella package web3 it will also set the provider for all sub modules web3.bub, web3.shh, etc EXCEPT web3.bzz which needs a separate provider at all times.
 
 Parameter:
 
@@ -135,7 +135,7 @@ Method:
 
 ```
 web3.providers
-web3.platon.providers
+web3.bub.providers
 ...
 ```
 
@@ -160,13 +160,13 @@ var web3 = new Web3(Web3.givenProvider || new Web3.providers.WebsocketProvider('
 
 #### web3.givenProvider
 
-When using web3.js in an PlatON compatible browser, it will set with the current native provider by that browser. Will return the given provider by the (browser) environment, otherwise null.
+When using web3.js in an Bubble compatible browser, it will set with the current native provider by that browser. Will return the given provider by the (browser) environment, otherwise null.
 
 Method:
 
 ```
 web3.givenProvider
-web3.platon.givenProvider
+web3.bub.givenProvider
 ...
 ```
 
@@ -184,7 +184,7 @@ Method:
 
 ```
 web3.currentProvider
-web3.platon.currentProvider
+web3.bub.currentProvider
 ...
 ```
 
@@ -202,7 +202,7 @@ Method:
 
 ```
 new web3.BatchRequest()
-new web3.platon.BatchRequest()
+new web3.bub.BatchRequest()
 ```
 
 Parameter:
@@ -220,65 +220,65 @@ Returns:
 Example:
 
 ```js
-var contract = new web3.platon.Contract(abi, address);
+var contract = new web3.bub.Contract(abi, address);
 
 var batch = new web3.BatchRequest();
-batch.add(web3.platon.getBalance.request('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j', 'latest', callback));
+batch.add(web3.bub.getBalance.request('lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j', 'latest', callback));
 batch.add(contract.methods.balance(address).call.request({from: 'lax1qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqmscn5j'}, callback2));
 batch.execute();
 ```
 
 ***
 
-#### web3.platon.defaultAccount
+#### web3.bub.defaultAccount
 
-`web3.platon.defaultAccount` This default address is used as the default "from" property, if no "from" property is specified in the following methods:
+`web3.bub.defaultAccount` This default address is used as the default "from" property, if no "from" property is specified in the following methods:
 
-*  web3.platon.sendTransaction()
-*  web3.platon.call()
-*  new web3.platon.Contract() -> myContract.methods.myMethod().call()
-*  new web3.platon.Contract() -> myContract.methods.myMethod().send()
+*  web3.bub.sendTransaction()
+*  web3.bub.call()
+*  new web3.bub.Contract() -> myContract.methods.myMethod().call()
+*  new web3.bub.Contract() -> myContract.methods.myMethod().send()
 
 Method:
 
 ```
-web3.platon.defaultAccount
+web3.bub.defaultAccount
 ```
 
 Property：
 
-`String` - 20 Bytes: 20 Bytes: Any PlatON address. You should have the private key for that address in your node or keystore. (Default is undefined)
+`String` - 20 Bytes: 20 Bytes: Any Bubble address. You should have the private key for that address in your node or keystore. (Default is undefined)
 
 Example:
 
 ```js
-web3.platon.defaultAccount;
+web3.bub.defaultAccount;
 > undefined
 
 // set the default account
-web3.platon.defaultAccount = 'atx1fyeszufxwxk62p46djncj86rd553skpph926ws';
+web3.bub.defaultAccount = 'atx1fyeszufxwxk62p46djncj86rd553skpph926ws';
 ```
 > Note:
 >
 > **All addresses must be quoted, as above: 'lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6'.**
 ***
-#### web3.platon.defaultBlock
+#### web3.bub.defaultBlock
 
-`web3.platon.defaultBlock` The default block is used for certain methods. 
+`web3.bub.defaultBlock` The default block is used for certain methods. 
 
-*  web3.platon.getBalance()
-*  web3.platon.getCode()
-*  web3.platon.getTransactionCount()
-*  web3.platon.getStorageAt()
-*  web3.platon.call()
-*  new web3.platon.Contract() -> myContract.methods.myMethod().call()
+*  web3.bub.getBalance()
+*  web3.bub.getCode()
+*  web3.bub.getTransactionCount()
+*  web3.bub.getStorageAt()
+*  web3.bub.call()
+*  new web3.bub.Contract() -> myContract.methods.myMethod().call()
 
 You can override it by passing in the defaultBlock as last parameter. 
 
 Method:
 
 ```
-web3.platon.defaultBlock
+web3.bub.defaultBlock
 ```
 
 Property:
@@ -295,23 +295,23 @@ Default is "latest"
 Example:
 
 ```js
-web3.platon.defaultBlock;
+web3.bub.defaultBlock;
 > "latest"
 
 // set the default block
-web3.platon.defaultBlock = 231;
+web3.bub.defaultBlock = 231;
 ```
 
 ***
 
-#### web3.platon.getProtocolVersion
+#### web3.bub.getProtocolVersion
 
-Returns the PlatON protocol version of the node.
+Returns the Bubble protocol version of the node.
 
 Method:
 
 ```
-web3.platon.getProtocolVersion([callback])
+web3.bub.getProtocolVersion([callback])
 ```
 
 Returns:
@@ -321,20 +321,20 @@ Returns:
 Example:
 
 ```js
-web3.platon.getProtocolVersion().then(console.log);
+web3.bub.getProtocolVersion().then(console.log);
 > "63"
 ```
 
 ***
 
-#### web3.platon.isSyncing
+#### web3.bub.isSyncing
 
-`web3.platon.isSyncing()` Checks if the node is currently syncing and returns either a syncing object, or false.
+`web3.bub.isSyncing()` Checks if the node is currently syncing and returns either a syncing object, or false.
 
 Method:
 
 ```
-web3.platon.isSyncing([callback])
+web3.bub.isSyncing([callback])
 ```
 
 Returns:
@@ -350,7 +350,7 @@ Returns:
 Example:
 
 ```js
-web3.platon.isSyncing().then(console.log);
+web3.bub.isSyncing().then(console.log);
 > {
     startingBlock: 100,
     currentBlock: 312,
@@ -362,14 +362,14 @@ web3.platon.isSyncing().then(console.log);
 
 ***
 
-#### web3.platon.getGasPrice
+#### web3.bub.getGasPrice
 
-`web3.platon.getGasPrice()` Returns the current gas price oracle. The gas price is determined by the last few blocks median gas price.
+`web3.bub.getGasPrice()` Returns the current gas price oracle. The gas price is determined by the last few blocks median gas price.
 
 Method:
 
 ```
-web3.platon.getGasPrice([callback])
+web3.bub.getGasPrice([callback])
 ```
 
 Returns:
@@ -379,20 +379,20 @@ Returns:
 Example:
 
 ```js
-web3.platon.getGasPrice().then(console.log);
+web3.bub.getGasPrice().then(console.log);
 > "20000000000"
 ```
 
 ***
 
-#### web3.platon.getAccounts
+#### web3.bub.getAccounts
 
-`web3.platon.getAccounts()` Returns a list of accounts the node controls.
+`web3.bub.getAccounts()` Returns a list of accounts the node controls.
 
 Method:
 
 ```
-web3.platon.getAccounts([callback])
+web3.bub.getAccounts([callback])
 ```
 
 Returns:
@@ -402,20 +402,20 @@ Returns:
 Example:
 
 ```js
-web3.platon.getAccounts().then(console.log);
+web3.bub.getAccounts().then(console.log);
 > ["atx1fyeszufxwxk62p46djncj86rd553skpph926ws", "atx1kg7y7wfwzqsyxppyxcdvhkkkwlf64cclmnav7p"]
 ```
 
 ***
 
-#### web3.platon.getBlockNumber
+#### web3.bub.getBlockNumber
 
-`web3.platon.getBlockNumber()` Returns the current block number.
+`web3.bub.getBlockNumber()` Returns the current block number.
 
 Method:
 
 ```
-web3.platon.getBlockNumber([callback])
+web3.bub.getBlockNumber([callback])
 ```
 
 Returns:
@@ -425,26 +425,26 @@ Returns:
 Example:
 
 ```js
-web3.platon.getBlockNumber().then(console.log);
+web3.bub.getBlockNumber().then(console.log);
 > 2744
 ```
 
 ***
 
-#### web3.platon.getBalance
+#### web3.bub.getBalance
 
-`web3.platon.getBalance()` Get the balance of an address at a given block.
+`web3.bub.getBalance()` Get the balance of an address at a given block.
 
 Method:
 
 ```
-web3.platon.getBalance(address [, defaultBlock] [, callback])
+web3.bub.getBalance(address [, defaultBlock] [, callback])
 ```
 
 Parameter:
 
 *  `address`：String - The address to get the balance of.
-*  `defaultBlock`：Number|String -  (optional) If you pass this parameter it will not use the default block set with web3.platon.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
+*  `defaultBlock`：Number|String -  (optional) If you pass this parameter it will not use the default block set with web3.bub.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
 *  `callback`：Function - (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -454,28 +454,28 @@ Returns:
 Example:
 
 ```js
-web3.platon.getBalance("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
+web3.bub.getBalance("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
 .then(console.log);
 > "1000000000000"
 ```
 
 ***
 
-#### web3.platon.getStorageAt
+#### web3.bub.getStorageAt
 
-`web3.platon.getStorageAt()` Get the storage at a specific position of an address.
+`web3.bub.getStorageAt()` Get the storage at a specific position of an address.
 
 Method:
 
 ```
-web3.platon.getStorageAt(address, position [, defaultBlock] [, callback])
+web3.bub.getStorageAt(address, position [, defaultBlock] [, callback])
 ```
 
 Parameter:
 
 *  `address` - `String`: The address to get the storage from.
 *  `position` - `Number`: The index position of the storage.
-*  `defaultBlock` -`Number|String` (optional) If you pass this parameter it will not use the default block set with web3.platon.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
+*  `defaultBlock` -`Number|String` (optional) If you pass this parameter it will not use the default block set with web3.bub.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
 *  `callback` -`Function`: (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -485,27 +485,27 @@ Returns:
 Example:
 
 ```js
-web3.platon.getStorageAt("atx1fyeszufxwxk62p46djncj86rd553skpph926ws", 0)
+web3.bub.getStorageAt("atx1fyeszufxwxk62p46djncj86rd553skpph926ws", 0)
 .then(console.log);
 > "0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"
 ```
 
 ***
 
-#### web3.platon.getCode
+#### web3.bub.getCode
 
-`web3.platon.getCode()` Get the code at a specific address.
+`web3.bub.getCode()` Get the code at a specific address.
 
 Method:
 
 ```
-web3.platon.getCode(address [, defaultBlock] [, callback])
+web3.bub.getCode(address [, defaultBlock] [, callback])
 ```
 
 Parameter:
 
 *  `address` - `String`: The address to get the code from.
-*  `defaultBlock` - `Number|String`: (optional) If you pass this parameter it will not use the default block set with web3.platon.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
+*  `defaultBlock` - `Number|String`: (optional) If you pass this parameter it will not use the default block set with web3.bub.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
 *  `callback` - `Function`: (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -515,21 +515,21 @@ Returns:
 Example:
 
 ```js
-web3.platon.getCode("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
+web3.bub.getCode("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
 .then(console.log);
 > "0x600160008035811a818181146012578301005b601b6001356025565b8060005260206000f25b600060078202905091905056"
 ```
 
 ***
 
-#### web3.platon.getBlock
+#### web3.bub.getBlock
 
-`web3.platon.getBlock()` Returns a block matching the block number or block hash.
+`web3.bub.getBlock()` Returns a block matching the block number or block hash.
 
 Method:
 
 ```
-web3.platon.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback])
+web3.bub.getBlock(blockHashOrBlockNumber [, returnTransactionObjects] [, callback])
 ```
 
 Parameter:
@@ -564,7 +564,7 @@ Promise returns Object - The block object:
 Example:
 
 ```js
-web3.platon.getBlock(3150)
+web3.bub.getBlock(3150)
 .then(console.log);
 
 > {
@@ -593,14 +593,14 @@ web3.platon.getBlock(3150)
 
 ***
 
-#### web3.platon.getBlockTransactionCount
+#### web3.bub.getBlockTransactionCount
 
-`web3.platon.getBlockTransactionCount()` Returns the number of transaction in a given block.
+`web3.bub.getBlockTransactionCount()` Returns the number of transaction in a given block.
 
 Method:
 
 ```
-web3.platon.getBlockTransactionCount(blockHashOrBlockNumber [, callback])
+web3.bub.getBlockTransactionCount(blockHashOrBlockNumber [, callback])
 ```
 
 Parameter:
@@ -615,21 +615,21 @@ Returns:
 Example:
 
 ```js
-web3.platon.getBlockTransactionCount("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
+web3.bub.getBlockTransactionCount("atx1fyeszufxwxk62p46djncj86rd553skpph926ws")
 .then(console.log);
 > 1
 ```
 
 ***
 
-#### web3.platon.getTransaction
+#### web3.bub.getTransaction
 
-`web3.platon.getTransaction()` Returns a transaction matching the given transaction hash.
+`web3.bub.getTransaction()` Returns a transaction matching the given transaction hash.
 
 Method:
 
 ```
-web3.platon.getTransaction(transactionHash [, callback])
+web3.bub.getTransaction(transactionHash [, callback])
 ```
 
 Parameter:
@@ -656,7 +656,7 @@ Returns:
 Example:
 
 ```js
-web3.platon.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b§234')
+web3.bub.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b§234')
 .then(console.log);
 > {
     "hash": "0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b",
@@ -675,9 +675,9 @@ web3.platon.getTransaction('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4
 
 ***
 
-#### web3.platon.getTransactionFromBlock
+#### web3.bub.getTransactionFromBlock
 
-`web3.platon.getTransactionFromBlock()` Returns a transaction based on a block hash or number and the transactions index position.
+`web3.bub.getTransactionFromBlock()` Returns a transaction based on a block hash or number and the transactions index position.
 
 Method:
 
@@ -698,23 +698,23 @@ Returns:
 Example:
 
 ```js
-var transaction = web3.platon.getTransactionFromBlock('0x4534534534', 2)
+var transaction = web3.bub.getTransactionFromBlock('0x4534534534', 2)
 .then(console.log);
-> // see web3.platon.getTransaction
+> // see web3.bub.getTransaction
 ```
 
 ***
 
-#### web3.platon.getTransactionReceipt
+#### web3.bub.getTransactionReceipt
 
-`web3.platon.getTransactionReceipt()` Returns the receipt of a transaction by transaction hash.
+`web3.bub.getTransactionReceipt()` Returns the receipt of a transaction by transaction hash.
 
 Notes: The receipt is not available for pending transactions and returns null.
 
 Method:
 
 ```
-web3.platon.getTransactionReceipt(hash [, callback])
+web3.bub.getTransactionReceipt(hash [, callback])
 ```
 
 Parameter:
@@ -742,7 +742,7 @@ Returns:
 Example:
 
 ```js
-var receipt = web3.platon.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b')
+var receipt = web3.bub.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31ec597f00b1f6f3dd2d66f4c9c6c445836d8b')
 .then(console.log);
 > {
   "status": true,
@@ -761,20 +761,20 @@ var receipt = web3.platon.getTransactionReceipt('0x9fc76417374aa880d4449a1f7f31e
 
 ***
 
-#### web3.platon.getTransactionCount
+#### web3.bub.getTransactionCount
 
-`web3.platon.getTransactionCount()` Get the numbers of transactions sent from this address.
+`web3.bub.getTransactionCount()` Get the numbers of transactions sent from this address.
 
 Method:
 
 ```
-web3.platon.getTransactionCount(address [, defaultBlock] [, callback])
+web3.bub.getTransactionCount(address [, defaultBlock] [, callback])
 ```
 
 Parameter:
 
 *  `address`：String - The address to get the numbers of transactions from.
-*  `defaultBlock`：Number|String -  (optional) If you pass this parameter it will not use the default block set with web3.platon.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
+*  `defaultBlock`：Number|String -  (optional) If you pass this parameter it will not use the default block set with web3.bub.defaultBlock. Pre-defined block numbers as "latest", "earliest", "pending", and "genesis" can also be used.
 *  `callback`：Function -  (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -784,38 +784,38 @@ Returns:
 Example:
 
 ```js
-web3.platon.getTransactionCount("lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
+web3.bub.getTransactionCount("lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
 .then(console.log);
 > 1
 ```
 
 ***
 
-#### web3.platon.sendTransaction
+#### web3.bub.sendTransaction
 
-`web3.platon.sendTransaction()` Sends a transaction to the network.
+`web3.bub.sendTransaction()` Sends a transaction to the network.
 
 Method:
 
 ```
-web3.platon.sendTransaction(transactionObject [, callback])
+web3.bub.sendTransaction(transactionObject [, callback])
 ```
 
 Parameter:
 
 *  `transactionObject`：`Object` - The transaction object to send:
-	* `from` - `String|Number`: The address for the sending account. Uses the web3.platon.defaultAccount property, if not specified. Or an address or index of a local wallet in web3.platon.accounts.wallet.
+	* `from` - `String|Number`: The address for the sending account. Uses the web3.bub.defaultAccount property, if not specified. Or an address or index of a local wallet in web3.bub.accounts.wallet.
 	* `to` - `String`: (optional) The destination address of the message, left undefined for a contract-creation transaction.
 	* `value` - `Number|String|BN|BigNumber`: (optional) The value transferred for the transaction in wei, also the endowment if it’s a contract-creation transaction.
 	* `gas` - `Number`: (optional, default: To-Be-Determined) The amount of gas to use for the transaction (unused gas is refunded).
-	* `gasPrice` - `Number|String|BN|BigNumber`: (optional) The price of gas for this transaction in wei, defaults to web3.platon.gasPrice.
+	* `gasPrice` - `Number|String|BN|BigNumber`: (optional) The price of gas for this transaction in wei, defaults to web3.bub.gasPrice.
 	* `data` - `String`: (optional) Either a ABI byte string containing the data of the function call on a contract, or in the case of a contract-creation transaction the initialisation code.
 	* `nonce` - `Number`: (optional) Integer of a nonce. This allows to overwrite your own pending transactions that use the same nonce.
 *  callback - Function: (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
 
-`web3.platon.sendTransaction()` The callback will return the 32 bytes transaction hash.
+`web3.bub.sendTransaction()` The callback will return the 32 bytes transaction hash.
 
 PromiEvent:  A promise combined event emitter. Will be resolved when the transaction receipt is available. Additionally the following events are available:
 
@@ -831,7 +831,7 @@ Example:
 var code = "603d80600c6000396000f3007c01000000000000000000000000000000000000000000000000000000006000350463c6888fa18114602d57005b6007600435028060005260206000f3";
 
 // using the callback
-web3.platon.sendTransaction({
+web3.bub.sendTransaction({
     from: 'atx1mc9jj4nf487e840j3k0vshjq7n9kj7aw9qvc0x',
     data: code // deploying a contracrt
 }, function(error, hash){
@@ -839,7 +839,7 @@ web3.platon.sendTransaction({
 });
 
 // using the promise
-web3.platon.sendTransaction({
+web3.bub.sendTransaction({
     from: 'lax1mc9jj4nf487e840j3k0vshjq7n9kj7awe459dv',
     to: 'lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6',
     value: '1000000000000000'
@@ -850,7 +850,7 @@ web3.platon.sendTransaction({
 
 
 // using the event emitter
-web3.platon.sendTransaction({
+web3.bub.sendTransaction({
     from: 'lax1mc9jj4nf487e840j3k0vshjq7n9kj7awe459dv',
     to: 'lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6',
     value: '1000000000000000'
@@ -867,14 +867,14 @@ web3.platon.sendTransaction({
 
 ***
 
-#### web3.platon.sendSignedTransaction
+#### web3.bub.sendSignedTransaction
 
-`web3.platon.sendSignedTransaction()` Sends an already signed transaction, generated for example using web3.platon.accounts.signTransaction.
+`web3.bub.sendSignedTransaction()` Sends an already signed transaction, generated for example using web3.bub.accounts.signTransaction.
 
 Method:
 
 ```
-web3.platon.sendSignedTransaction(signedTransactionData [, callback])
+web3.bub.sendSignedTransaction(signedTransactionData [, callback])
 ```
 
 Parameter:
@@ -886,7 +886,7 @@ Returns:
 
 PromiEvent:  A promise combined event emitter. Will be resolved when the transaction receipt is available.
 
-Please see the return values for web3.platon.sendTransaction for details.
+Please see the return values for web3.bub.sendTransaction for details.
 
 Example:
 
@@ -896,8 +896,8 @@ const transaction_demo = async function () {
     web3 = new Web3("http://127.0.0.1:6789");
     var privateKey="0xb416b341437c420a45cb6ba5ca883655eec169360d36866124d23682c03766ba";
     // 主网地址
-    let from = web3.platon.accounts.privateKeyToAccount(privateKey).address;
-    let nonce = web3.utils.numberToHex(await web3.platon.getTransactionCount(from));
+    let from = web3.bub.accounts.privateKeyToAccount(privateKey).address;
+    let nonce = web3.utils.numberToHex(await web3.bub.getTransactionCount(from));
     let tx = {
         from:from,
         to: "atp1j9x482k50kl86qvx5cyw7hp48qcx5mezayxj8t",
@@ -908,29 +908,29 @@ const transaction_demo = async function () {
         nonce: nonce,
     };
     // 签名交易
-    let signTx = await web3.platon.accounts.signTransaction(tx, privateKey);
+    let signTx = await web3.bub.accounts.signTransaction(tx, privateKey);
     // 发送交易
-    let receipt = await web3.platon.sendSignedTransaction(signTx.rawTransaction);
+    let receipt = await web3.bub.sendSignedTransaction(signTx.rawTransaction);
     console.log("sign tx data:\n", signTx.rawTransaction)
 }
 ```
 
 ***
 
-#### web3.platon.sign
+#### web3.bub.sign
 
-`web3.platon.sign()` Signs data using a specific account. This account needs to be unlocked.
+`web3.bub.sign()` Signs data using a specific account. This account needs to be unlocked.
 
 Method:
 
 ```
-web3.platon.sign(dataToSign, address [, callback])
+web3.bub.sign(dataToSign, address [, callback])
 ```
 
 Parameter:
 
 *  `dataToSign`：String - Data to sign. If String it will be converted using web3.utils.utf8ToHex.
-*  `address`：String|Number - Address to sign data with. Or an address or index of a local wallet in web3.platon.accounts.wallet.
+*  `address`：String|Number - Address to sign data with. Or an address or index of a local wallet in web3.bub.accounts.wallet.
 *  `callback`：Function - (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -940,26 +940,26 @@ Returns:
 Example:
 
 ```js
-web3.platon.sign("Hello world", "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
+web3.bub.sign("Hello world", "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
 .then(console.log);
 > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
 // the below is the same
-web3.platon.sign(web3.utils.utf8ToHex("Hello world"), "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
+web3.bub.sign(web3.utils.utf8ToHex("Hello world"), "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6")
 .then(console.log);
 > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 ```
 
 ***
 
-#### web3.platon.signTransaction
+#### web3.bub.signTransaction
 
-`web3.platon.signTransaction()` Signs a transaction. This account needs to be unlocked.
+`web3.bub.signTransaction()` Signs a transaction. This account needs to be unlocked.
 
 Method:
 
 ```
-web3.platon.signTransaction(transactionObject, address [, callback])
+web3.bub.signTransaction(transactionObject, address [, callback])
 ```
 
 Parameter:
@@ -970,12 +970,12 @@ Parameter:
 
 Returns:
 
-Promise returns Object - The RLP encoded transaction. The raw property can be used to send the transaction using web3.platon.sendSignedTransaction.
+Promise returns Object - The RLP encoded transaction. The raw property can be used to send the transaction using web3.bub.sendSignedTransaction.
 
 Example:
 
 ```js
-web3.platon.signTransaction({
+web3.bub.signTransaction({
     from: "atx1avq5lrytgxxmddzhwnpjdg8xf3ufznwql8t8dx",
     gasPrice: "20000000000",
     gas: "21000",
@@ -1002,19 +1002,19 @@ web3.platon.signTransaction({
 
 ***
 
-#### web3.platon.estimateGas
+#### web3.bub.estimateGas
 
-`web3.platon.estimateGas()` Executes a message call or transaction and returns the amount of the gas used.
+`web3.bub.estimateGas()` Executes a message call or transaction and returns the amount of the gas used.
 
 Method:
 
 ```
-web3.platon.estimateGas(callObject [, callback])
+web3.bub.estimateGas(callObject [, callback])
 ```
 
 Parameter:
 
-*  `callObject`：Object - A transaction object see web3.platon.sendTransaction, with the difference that for calls the from property is optional as well.
+*  `callObject`：Object - A transaction object see web3.bub.sendTransaction, with the difference that for calls the from property is optional as well.
 *  `callback`：Function - (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
@@ -1024,7 +1024,7 @@ Returns:
 Example:
 
 ```js
-web3.platon.estimateGas({
+web3.bub.estimateGas({
     to: "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6",
     data: "0xc6888fa10000000000000000000000000000000000000000000000000000000000000003"
 })
@@ -1034,14 +1034,14 @@ web3.platon.estimateGas({
 
 ***
 
-#### web3.platon.getPastLogs
+#### web3.bub.getPastLogs
 
-`web3.platon.getPastLogs()` Gets past logs, matching the given options.
+`web3.bub.getPastLogs()` Gets past logs, matching the given options.
 
 Method:
 
 ```
-web3.platon.getPastLogs(options [, callback])
+web3.bub.getPastLogs(options [, callback])
 ```
 
 Parameter:
@@ -1070,7 +1070,7 @@ The structure of the returned event `Object` in the `Array` looks as follows:
 Example:
 
 ```js
-web3.platon.getPastLogs({
+web3.bub.getPastLogs({
     address: "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6",
     topics: ["0x033456732123ffff2342342dd12342434324234234fd234fd23fd4f23d4234"]
 })
@@ -1090,14 +1090,14 @@ web3.platon.getPastLogs({
 
 ***
 
-#### web3.platon.subscribe
+#### web3.bub.subscribe
 
-The web3.platon.subscribe function lets you subscribe to specific events in the blockchain.
+The web3.bub.subscribe function lets you subscribe to specific events in the blockchain.
 
 Method:
 
 ```
-web3.platon.subscribe(type [, options] [, callback]);
+web3.bub.subscribe(type [, options] [, callback]);
 ```
 
 Parameter:
@@ -1126,7 +1126,7 @@ Mixed -  depends on the subscription, see the different subscriptions for more.
 Example:
 
 ```js
-var subscription = web3.platon.subscribe('logs', {
+var subscription = web3.bub.subscribe('logs', {
     address: 'atx..',
     topics: ['atx...']
 }, function(error, result){
@@ -1143,14 +1143,14 @@ subscription.unsubscribe(function(error, success){
 
 ***
 
-#### web3.platon.clearSubscriptions
+#### web3.bub.clearSubscriptions
 
-`web3.platon.clearSubscriptions()` Resets subscriptions. This will not reset subscriptions from other packages like web3-shh, as they use their own requestManager.
+`web3.bub.clearSubscriptions()` Resets subscriptions. This will not reset subscriptions from other packages like web3-shh, as they use their own requestManager.
 
 Method:
 
 ```
-web3.platon.clearSubscriptions(flag)
+web3.bub.clearSubscriptions(flag)
 ```
 
 Parameters:
@@ -1164,23 +1164,23 @@ Returns:
 Example:
 
 ```js
-web3.platon.subscribe('logs', {} ,function(){ ... });
+web3.bub.subscribe('logs', {} ,function(){ ... });
 
 ...
 
-web3.platon.clearSubscriptions();
+web3.bub.clearSubscriptions();
 ```
 
 ***
 
-#### web3.platon.subscribe("pendingTransactions")
+#### web3.bub.subscribe("pendingTransactions")
 
 `pendingTransactions` Subscribes to incoming pending transactions.
 
 Method:
 
 ```
-web3.platon.subscribe('pendingTransactions' [, callback]);
+web3.bub.subscribe('pendingTransactions' [, callback]);
 ```
 
 Parameter:
@@ -1203,7 +1203,7 @@ Notification returns:
 Example:
 
 ```js
-var subscription = web3.platon.subscribe('pendingTransactions', function(error, result){
+var subscription = web3.bub.subscribe('pendingTransactions', function(error, result){
     if (!error)
         console.log(result);
 })
@@ -1220,14 +1220,14 @@ subscription.unsubscribe(function(error, success){
 
 ***
 
-#### web3.platon.subscribe('newBlockHeaders')
+#### web3.bub.subscribe('newBlockHeaders')
 
 `newBlockHeaders` Subscribes to incoming block headers. This can be used as timer to check for changes on the blockchain.
 
 Method:
 
 ```
-web3.platon.subscribe('newBlockHeaders' [, callback]);
+web3.bub.subscribe('newBlockHeaders' [, callback]);
 ```
 
 Parameter:
@@ -1268,7 +1268,7 @@ Notification returns:
 Example:
 
 ```js
-var subscription = web3.platon.subscribe('newBlockHeaders', function(error, result){
+var subscription = web3.bub.subscribe('newBlockHeaders', function(error, result){
     if (error)
         console.log(error);
 })
@@ -1284,14 +1284,14 @@ subscription.unsubscribe(function(error, success){
 
 ***
 
-#### web3.platon.subscribe('syncing')
+#### web3.bub.subscribe('syncing')
 
 `syncing` Subscribe to syncing events. This will return an object when the node is syncing and when it's finished syncing will return FALSE.
 
 Method:
 
 ```
-web3.platon.subscribe('syncing' [, callback]);
+web3.bub.subscribe('syncing' [, callback]);
 ```
 
 Parameter:
@@ -1307,7 +1307,7 @@ Returns:
 * `"changed"` returns `Object`: Fires when the synchronisation is started with true and when finished with false.
 * `"error"` returns `Object`: Fires when an error in the subscription occurs.
 
-For the structure of a returned event Object see `web3.platon.isSyncing` return values.
+For the structure of a returned event Object see `web3.bub.isSyncing` return values.
 
 Notification returns:
 
@@ -1317,7 +1317,7 @@ Notification returns:
 Example:
 
 ```js
-var subscription = web3.platon.subscribe('syncing', function(error, sync){
+var subscription = web3.bub.subscribe('syncing', function(error, sync){
     if (!error)
         console.log(sync);
 })
@@ -1341,14 +1341,14 @@ subscription.unsubscribe(function(error, success){
 
 ***
 
-#### web3.platon.subscribe('logs')
+#### web3.bub.subscribe('logs')
 
 Subscribes to incoming logs, filtered by the given options. If a valid numerical fromBlock options property is set, Web3 will retrieve logs beginning from this point, backfilling the response as necessary.
 
 Method:
 
 ```
-web3.platon.subscribe('logs', options [, callback]);
+web3.bub.subscribe('logs', options [, callback]);
 ```
 
 Parameter:
@@ -1368,17 +1368,17 @@ EventEmitter: An subscription instance as an event emitter with the following ev
 * `"changed"` returns `Object`: returns Object: Fires on each log which was removed from the blockchain. The log will have the additional property "removed: true".
 * `"error"`  returns `Object`: Fires when an error in the subscription occurs.
 
-For the structure of a returned event Object see web3.platon.getPastEvents return values.
+For the structure of a returned event Object see web3.bub.getPastEvents return values.
 
 Notification returns:
 
 * `Object|Null` - First parameter is an error object if the subscription failed.
-* `Object` - The log object like in web3.platon.getPastEvents return values.
+* `Object` - The log object like in web3.bub.getPastEvents return values.
 
 Example:
 
 ```js
-var subscription = web3.platon.subscribe('logs', {
+var subscription = web3.bub.subscribe('logs', {
     address: 'atx..',
     topics: ['atx...']
 }, function(error, result){
@@ -1400,16 +1400,16 @@ subscription.unsubscribe(function(error, success){
 
 ***
 
-#### web3.platon.Contract
+#### web3.bub.Contract
 
-The `web3.platon.Contract` object makes it easy to interact with smart contracts on the PlatON blockchain. When you create a new contract object you give it the json interface of the respective smart contract and web3 will auto convert all calls into low level ABI calls over RPC for you.
+The `web3.bub.Contract` object makes it easy to interact with smart contracts on the Bubble blockchain. When you create a new contract object you give it the json interface of the respective smart contract and web3 will auto convert all calls into low level ABI calls over RPC for you.
 
 This allows you to interact with smart contracts as if they were JavaScript objects.
 
 To use it standalone:
 
 ```
-new web3.platon.Contract(jsonInterface[, address][, options])
+new web3.bub.Contract(jsonInterface[, address][, options])
 ```
 
 Parameter:
@@ -1431,7 +1431,7 @@ Returns:
 Example:
 
 ```js
-var myContract = new web3.platon.Contract([...], 'lax1mc9jj4nf487e840j3k0vshjq7n9kj7awe459dv', {
+var myContract = new web3.bub.Contract([...], 'lax1mc9jj4nf487e840j3k0vshjq7n9kj7awe459dv', {
     from: 'lax1zg69v7yszg69v7yszg69v7yszg69v7y3q7dnwf', // default from address
     gasPrice: '20000000000' // default gas price in wei, 20 gwei in this case
 });
@@ -1553,7 +1553,7 @@ Parameter:
 `options` - Object: The options used for deployment.
 
 * `data` - `String`: The byte code of the contract.
-* `arguments` - `Array`: (optional): The arguments which get passed to the constructor on deployment. If you deploy a WASM contract, you can refer to [WASM contract parameter passing reference](https://github.com/PlatONnetwork/client-sdk-js/blob/feature/wasm/test/1_platon_wasm.js)。
+* `arguments` - `Array`: (optional): The arguments which get passed to the constructor on deployment. If you deploy a WASM contract, you can refer to [WASM contract parameter passing reference](https://github.com/bubble/client-sdk-js/blob/feature/wasm/test/1_bubble_wasm.js)。
 
 Returns:
 
@@ -1627,7 +1627,7 @@ myContract.deploy({
 #### methods
 Creates a transaction object for that method, which then can be called, send, estimated.
 
-If it is a WASM contract, you can refer to [WASM contract parameter passing reference](https://github.com/PlatONnetwork/client-sdk-js/blob/feature/wasm/test/1_platon_wasm.js)。
+If it is a WASM contract, you can refer to [WASM contract parameter passing reference](https://github.com/bubble/client-sdk-js/blob/feature/wasm/test/1_bubble_wasm.js)。
 Method:
 
 ```
@@ -1736,7 +1736,7 @@ contract MyContract {
 
 ```
 // web3.js
-var MyContract = new web3.platon.contract(abi, address);
+var MyContract = new web3.bub.contract(abi, address);
 MyContract.methods.myFunction().call()
 .then(console.log);
 > Result {
@@ -1762,7 +1762,7 @@ Then in web3.js, the `call` method will also return a single value:
 
 ```
 // web3.js
-var MyContract = new web3.platon.contract(abi, address);
+var MyContract = new web3.bub.contract(abi, address);
 MyContract.methods.myFunction().call()
 .then(console.log);
 > "Hello!%"
@@ -2176,18 +2176,18 @@ Note: Read contract history events, which can be obtained using the `newFilter` 
 
 ------
 
-#### web3.platon.personal
+#### web3.bub.personal
 
-The web3-platon-personal package allows you to interact with the PlatON node’s accounts.
+The web3-bubble-personal package allows you to interact with the Bubble node’s accounts.
 
 Notes: Many of these functions send sensitive information, like password. Never call these functions over a unsecured Websocket or HTTP provider, as your password will be sent in plain text!
 
 Usage: 
 
 ```
-var Personal = require('web3.platon-personal');
+var Personal = require('web3.bub-personal');
 
-// "Personal.providers.givenProvider" will be set if in an PlatON supported browser.
+// "Personal.providers.givenProvider" will be set if in an Bubble supported browser.
 var personal = new Personal(Personal.givenProvider || 'ws://some.local-or-remote.node:8546');
 
 
@@ -2196,12 +2196,12 @@ var personal = new Personal(Personal.givenProvider || 'ws://some.local-or-remote
 var Web3 = require('web3');
 var web3 = new Web3(Web3.givenProvider || 'ws://some.local-or-remote.node:8546');
 
-// -> web3.platon.personal
+// -> web3.bub.personal
 ```
 
 ***
 
-#### web3.platon.personal.newAccount
+#### web3.bub.personal.newAccount
 
 Creates a new account.
 
@@ -2210,7 +2210,7 @@ Notes: Never call this function over a unsecured Websocket or HTTP provider, as 
 Method:
 
 ```
-web3.platon.personal.newAccount(password, [callback])
+web3.bub.personal.newAccount(password, [callback])
 ```
 
 Parameter:
@@ -2224,23 +2224,23 @@ Returns:
 Example:
 
 ```js
-web3.platon.personal.newAccount('!@superpassword')
+web3.bub.personal.newAccount('!@superpassword')
 .then(console.log);
 > 'lax1uqug0zq7rcxddndleq4ux2ft3tv6dqljphydrl'
 ```
 
 ***
 
-#### web3.platon.personal.sign
+#### web3.bub.personal.sign
 
-The sign method calculates an PlatON specific signature with:
+The sign method calculates an Bubble specific signature with:
 
 Notes: Sending your account password over an unsecured HTTP RPC connection is highly unsecure.
 
 Method:
 
 ```
-web3.platon.personal.sign(dataToSign, address, password [, callback])
+web3.bub.personal.sign(dataToSign, address, password [, callback])
 ```
 
 Parameter:
@@ -2257,26 +2257,26 @@ Returns:
 Example:
 
 ```js
-web3.platon.personal.sign("Hello world", "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6", "test password!")
+web3.bub.personal.sign("Hello world", "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6", "test password!")
 .then(console.log);
 > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 
 // the below is the same
-web3.platon.personal.sign(web3.utils.utf8ToHex("Hello world"), "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6", "test password!")
+web3.bub.personal.sign(web3.utils.utf8ToHex("Hello world"), "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6", "test password!")
 .then(console.log);
 > "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400"
 ```
 
 ***
 
-#### web3.platon.personal.ecRecover
+#### web3.bub.personal.ecRecover
 
 Recovers the account that signed the data.
 
 Method:
 
 ```
-web3.platon.personal.ecRecover(dataThatWasSigned, signature [, callback])
+web3.bub.personal.ecRecover(dataThatWasSigned, signature [, callback])
 ```
 
 Parameter:
@@ -2292,13 +2292,13 @@ Returns:
 Example:
 
 ```js
-web3.platon.personal.ecRecover("Hello world", "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400").then(console.log);
+web3.bub.personal.ecRecover("Hello world", "0x30755ed65396facf86c53e6217c52b4daebe72aa4941d89635409de4c9c7f9466d4e9aaec7977f05e923889b33c0d0dd27d7226b6e6f56ce737465c5cfd04be400").then(console.log);
 > "lax1fyeszufxwxk62p46djncj86rd553skpptsj8v6"
 ```
 
 ***
 
-#### web3.platon.personal.signTransaction
+#### web3.bub.personal.signTransaction
 
 Signs a transaction. This account needs to be unlocked.
 
@@ -2307,23 +2307,23 @@ Notes: Sending your account password over an unsecured HTTP RPC connection is hi
 Method:
 
 ```
-web3.platon.personal.signTransaction(transaction, password [, callback])
+web3.bub.personal.signTransaction(transaction, password [, callback])
 ```
 
 Parameter:
 
-*  `transaction`：Object - The transaction data to sign web3.platon.sendTransaction() for more.
+*  `transaction`：Object - The transaction data to sign web3.bub.sendTransaction() for more.
 *  `password`：String - The password of the from account, to sign the transaction with.
 *  `callback`：Function - (optional) Optional callback, returns an error object as first parameter and the result as second.
 
 Returns:
 
-Promise returns Object - The RLP encoded transaction. The raw property can be used to send the transaction using web3.platon.sendSignedTransaction.
+Promise returns Object - The RLP encoded transaction. The raw property can be used to send the transaction using web3.bub.sendSignedTransaction.
 
 Example:
 
 ```js
-web3.platon.signTransaction({
+web3.bub.signTransaction({
     from: "atx1avq5lrytgxxmddzhwnpjdg8xf3ufznwql8t8dx",
     gasPrice: "20000000000",
     gas: "21000",
@@ -2350,31 +2350,31 @@ web3.platon.signTransaction({
 
 ***
 
-#### web3.platon.abi
+#### web3.bub.abi
 
-The web3.platon.abi functions let you de- and encode parameters to ABI (Application Binary Interface) for function calls to the EVM (Ethereum Virtual Machine).
+The web3.bub.abi functions let you de- and encode parameters to ABI (Application Binary Interface) for function calls to the EVM (Ethereum Virtual Machine).
 
 Function List:
 
-*  web3.platon.abi.encodeFunctionSignature
-*  web3.platon.abi.encodeEventSignature
-*  web3.platon.abi.encodeParameter
-*  web3.platon.abi.encodeParameters
-*  web3.platon.abi.encodeFunctionCall
-*  web3.platon.abi.decodeParameter
-*  web3.platon.abi.decodeParameters
-*  web3.platon.abi.decodeLog
+*  web3.bub.abi.encodeFunctionSignature
+*  web3.bub.abi.encodeEventSignature
+*  web3.bub.abi.encodeParameter
+*  web3.bub.abi.encodeParameters
+*  web3.bub.abi.encodeFunctionCall
+*  web3.bub.abi.decodeParameter
+*  web3.bub.abi.decodeParameters
+*  web3.bub.abi.decodeLog
 
 ***
 
-#### web3.platon.abi.encodeFunctionSignature
+#### web3.bub.abi.encodeFunctionSignature
 
 Encodes the function name to it's ABI signature, which are the first 4 bytes of the sha3 hash of the function name including types.
 
 Method:
 
 ```
-web3.platon.abi.encodeFunctionSignature(functionName);
+web3.bub.abi.encodeFunctionSignature(functionName);
 ```
 
 Parameter:
@@ -2389,7 +2389,7 @@ Example:
 
 ```js
 // From a JSON interface object
-web3.platon.abi.encodeFunctionSignature({
+web3.bub.abi.encodeFunctionSignature({
     name: 'myMethod',
     type: 'function',
     inputs: [{
@@ -2403,20 +2403,20 @@ web3.platon.abi.encodeFunctionSignature({
 > 0x24ee0097
 
 // Or string
-web3.platon.abi.encodeFunctionSignature('myMethod(uint256,string)')
+web3.bub.abi.encodeFunctionSignature('myMethod(uint256,string)')
 > '0x24ee0097'
 ```
 
 ***
 
-#### web3.platon.abi.encodeEventSignature
+#### web3.bub.abi.encodeEventSignature
 
 Encodes the event name to it's ABI signature, which are the sha3 hash of the event name including input types.
 
 Method:
 
 ```
-web3.platon.abi.encodeEventSignature(eventName);
+web3.bub.abi.encodeEventSignature(eventName);
 ```
 
 Parameter:
@@ -2431,11 +2431,11 @@ Example:
 
 ```js
 // use params of string.
-web3.platon.abi.encodeEventSignature('myEvent(uint256,bytes32)')
+web3.bub.abi.encodeEventSignature('myEvent(uint256,bytes32)')
 > 0xf2eeb729e636a8cb783be044acf6b7b1e2c5863735b60d6daae84c366ee87d97
 
 // or from a json interface object
-web3.platon.abi.encodeEventSignature({
+web3.bub.abi.encodeEventSignature({
     name: 'myEvent',
     type: 'event',
     inputs: [{
@@ -2451,14 +2451,14 @@ web3.platon.abi.encodeEventSignature({
 
 ***
 
-#### web3.platon.abi.encodeFunctionCall
+#### web3.bub.abi.encodeFunctionCall
 
 Encodes a function call using it's JSON interface object and given paramaters.
 
 Method:
 
 ```
-web3.platon.abi.encodeFunctionCall(jsonInterface, parameters);
+web3.bub.abi.encodeFunctionCall(jsonInterface, parameters);
 ```
 
 Parameter:
@@ -2473,7 +2473,7 @@ Returns:
 Example:
 
 ```js
-web3.platon.abi.encodeFunctionCall({
+web3.bub.abi.encodeFunctionCall({
     name: 'myMethod',
     type: 'function',
     inputs: [{
@@ -2489,14 +2489,14 @@ web3.platon.abi.encodeFunctionCall({
 
 ***
 
-#### web3.platon.abi.decodeParameter
+#### web3.bub.abi.decodeParameter
 
 Decodes an ABI encoded parameter to it's JavaScript type.
 
 Method:
 
 ```
-web3.platon.abi.decodeParameter(type, hexString);
+web3.bub.abi.decodeParameter(type, hexString);
 ```
 
 Parameter:
@@ -2511,23 +2511,23 @@ Returns:
 Example:
 
 ```js
-web3.platon.abi.decodeParameter('uint256', '0x0000000000000000000000000000000000000000000000000000000000000010');
+web3.bub.abi.decodeParameter('uint256', '0x0000000000000000000000000000000000000000000000000000000000000010');
 > "16"
 
-web3.platon.abi.decodeParameter('string', '0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000848656c6c6f212521000000000000000000000000000000000000000000000000');
+web3.bub.abi.decodeParameter('string', '0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000848656c6c6f212521000000000000000000000000000000000000000000000000');
 > "Hello!%!"
 ```
 
 ***
 
-#### web3.platon.abi.decodeParameters
+#### web3.bub.abi.decodeParameters
 
 Decodes ABI encoded parameters to it's JavaScript types.
 
 Method:
 
 ```
-web3.platon.abi.decodeParameters(typesArray, hexString);
+web3.bub.abi.decodeParameters(typesArray, hexString);
 ```
 
 Parameter:
@@ -2542,10 +2542,10 @@ Returns:
 Example:
 
 ```js
-web3.platon.abi.decodeParameters(['string', 'uint256'], '0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000ea000000000000000000000000000000000000000000000000000000000000000848656c6c6f212521000000000000000000000000000000000000000000000000');
+web3.bub.abi.decodeParameters(['string', 'uint256'], '0x000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000ea000000000000000000000000000000000000000000000000000000000000000848656c6c6f212521000000000000000000000000000000000000000000000000');
 > Result { '0': 'Hello!%!', '1': '234' }
 
-web3.platon.abi.decodeParameters([{
+web3.bub.abi.decodeParameters([{
     type: 'string',
     name: 'myString'
 },{
@@ -2562,14 +2562,14 @@ web3.platon.abi.decodeParameters([{
 
 ***
 
-#### web3.platon.abi.decodeLog
+#### web3.bub.abi.decodeLog
 
 Decodes ABI encoded log data and indexed topic data.
 
 Method:
 
 ```
-web3.platon.abi.decodeLog(inputs, hexString, topics);
+web3.bub.abi.decodeLog(inputs, hexString, topics);
 ```
 
 Parameter:
@@ -2585,7 +2585,7 @@ Returns:
 Example:
 
 ```js
-web3.platon.abi.decodeLog([{
+web3.bub.abi.decodeLog([{
     type: 'string',
     name: 'myString'
 },{
@@ -2613,7 +2613,7 @@ web3.platon.abi.decodeLog([{
 
 #### web3.utils
 
-This package provides utility functions for PlatON dapps and other web3.js packages
+This package provides utility functions for Bubble dapps and other web3.js packages
 
 Method:
 
@@ -2984,7 +2984,7 @@ web3.utils.isHex('Hello');
 
 #### web3.utils.isAddress
 
-Checks if a given string is a valid PlatON address. It will also check the checksum, if the address has upper and lowercase letters.
+Checks if a given string is a valid Bubble address. It will also check the checksum, if the address has upper and lowercase letters.
 
 Method:
 
@@ -3059,7 +3059,7 @@ web3.utils.isBech32Address('atx1zg69v7yszg69v7yszg69v7yszg69v7y3kdfylf');
 
 #### web3.utils.toBech32Address
 
- Convert a valid PlatON address to a bech32 format address of the designated network.  
+ Convert a valid Bubble address to a bech32 format address of the designated network.  
 
 Method:
 
@@ -3071,7 +3071,7 @@ Parameters:
 
 `hrp` - String:  Specify the network parameters, lax indicates the test network address, and lat indicates the main network address.
 
-`address` - String:  PlatON address format string. 
+`address` - String:  Bubble address format string. 
 
 Returns:
 
@@ -3091,7 +3091,7 @@ web3.utils.toBech32Address('atp', '0x1234567890123456789012345678901234567891');
 
 #### web3.utils.decodeBech32Address
 
- Resolve the bech32 format address of the specified network into a valid PlatON address. 
+ Resolve the bech32 format address of the specified network into a valid Bubble address. 
 
 Method:
 
@@ -3107,7 +3107,7 @@ Parameters:
 
 Returns:
 
-`String`:  The resolution correctly returns a valid PlatON address, otherwise it returns null. 
+`String`:  The resolution correctly returns a valid Bubble address, otherwise it returns null. 
 
 Sample code: 
 
@@ -3123,7 +3123,7 @@ web3.utils.decodeBech32Address('atp1zg69v7yszg69v7yszg69v7yszg69v7y3kdfylf');
 
 #### web3.utils.toChecksumAddress
 
-Will convert an upper or lowercase PlatON address to a checksum address.
+Will convert an upper or lowercase Bubble address to a checksum address.
 
 Method:
 
@@ -3582,7 +3582,7 @@ web3.utils.padLeft('Hello', 20, 'x');
 
 ### Overview
 
-The `call` or `send` function of ppos (the built-in contract related to the economic model) is used to convert the parameters passed into the parameters required by the rpc interface `platon_call` or `platon_sendRawTransaction` call, and then send the transaction to the node. And some helper functions needed to complete the call and send parameters.
+The `call` or `send` function of ppos (the built-in contract related to the economic model) is used to convert the parameters passed into the parameters required by the rpc interface `bub_call` or `bub_sendRawTransaction` call, and then send the transaction to the node. And some helper functions needed to complete the call and send parameters.
 
 ### Usage
 
@@ -3617,7 +3617,7 @@ Of course, in order to satisfy multiple ppos that can be instantiated arbitraril
         nodeId: ppos.hexStrBuf(nodeId),
         externalId: 'externalId',
         nodeName: 'Me',
-        website: 'www.platon.network',
+        website: 'www.bubble.network',
         details: 'staking',
         amount: ppos.bigNumBuf(amount),
         rewardPer: 500, //传500就是5%的奖励作为委托奖励
@@ -3642,7 +3642,7 @@ Of course, in order to satisfy multiple ppos that can be instantiated arbitraril
         ppos.hexStrBuf(nodeId),
         'externalId',
         'Me',
-        'www.platon.network',
+        'www.bub.network',
         'staking',
         ppos.bigNumBuf(amount),
         500,
@@ -3852,10 +3852,10 @@ Example:
 let reply = await ppos.rpc('admin_getProgramVersion'); 
 
 // Get all accounts
-let reply = await ppos.rpc('platon_accounts')
+let reply = await ppos.rpc('bub_accounts')
 
 // Get the amount of the specified account.
-let reply = await ppos.rpc('platon_getBalance', ["lax1w9x7ye4qalarnl9v59zzhyn7tug9864rr2fc35","latest"])
+let reply = await ppos.rpc('bub_getBalance', ["lax1w9x7ye4qalarnl9v59zzhyn7tug9864rr2fc35","latest"])
 ```
 
 ***
@@ -4127,7 +4127,7 @@ Parameters:
 |Data|string| Query result of json string |
 |ErrMsg|string| Error message |
 
-> Note: The following query interfaces (the interfaces called by `platon_call`) are returned in the above format unless otherwise specified
+> Note: The following query interfaces (the interfaces called by `bub_call`) are returned in the above format unless otherwise specified
 
 Returns: List
 
@@ -4137,7 +4137,7 @@ Returns: List
 |StakingAddress|20bytes| The account used when initiating the pledge (this account can only be used for subsequent pledge information. When the pledge is cancelled, `von` will be returned to the account or the account lock information) |
 |BenefitAddress|20bytes| Revenue account for receiving block rewards and pledged rewards |
 |StakingTxIndex|uint32(4bytes)| Index of transactions when pledge is initiated |
-|ProgramVersion|uint32| The real version number of the PlatON process of the pledged node (the interface for obtaining the version number is provided by the governance) |
+|ProgramVersion|uint32| The real version number of the Bubble process of the pledged node (the interface for obtaining the version number is provided by the governance) |
 |StakingBlockNum|uint64(8bytes)| Block height when pledge is initiated |
 |Shares|*big.Int(bytes)| The current candidate's total pledge plus the number of `von` entrusted |
 |ExternalId|string| External Id (with a length limit, the Id described by the third-party pull node) |
@@ -4165,7 +4165,7 @@ Returns: List
 |StakingAddress|20bytes| The account used when initiating the pledge (the pledge information can only be used for this operation in subsequent operations. When the pledge is cancelled, von will be returned to the account or the account lock information) |
 |BenefitAddress|20bytes| Revenue account for receiving block rewards and pledged rewards |
 |StakingTxIndex|uint32(4bytes)| Index of transactions when pledge is initiated |
-|ProgramVersion|uint32(4bytes)| The real version number of the PlatON process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
+|ProgramVersion|uint32(4bytes)| The real version number of the Bubble process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
 |StakingBlockNum|uint64(8bytes)| Block height when pledge is initiated |
 |Shares|*big.Int(bytes)| The current candidate's total pledge plus the number of entrusted von |
 |ExternalId|string| External Id (with a length limit, the Id described by the third-party pull node) |
@@ -4192,7 +4192,7 @@ Returns:List
 |StakingAddress|20bytes| The account used when initiating the pledge (the pledge information can only be used for this operation in subsequent operations. When the pledge is cancelled, von will be returned to the account or the account lock information) |
 |BenefitAddress|20bytes| Revenue account for receiving block rewards and pledged rewards |
 |StakingTxIndex|uint32(4bytes)| Index of transactions when pledge is initiated |
-|ProgramVersion|uint32(4bytes)| The real version number of the PlatON process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
+|ProgramVersion|uint32(4bytes)| The real version number of the Bubble process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
 |Status|uint32(4bytes)|The status of the candidate (the status is placed according to the 32bit of uint32, there can be multiple states at the same time, and the value is the sum of multiple simultaneous state values [0: node available (32 bits are all 0); 1: node Not available (only the last bit is 1); 2: The node has a low block generation rate but does not meet the removal condition (only the penultimate bit is 1); 4: The node's von is not enough to meet the minimum pledge threshold (only the penultimate bit 1); 8: The node is reported with a double sign (only the penultimate bit is 1)); 16: the node's block generation rate is low and the removal condition is met (the penultimate bit is 1); 32: the node actively initiates the cancellation (Only the penultimate bit is 1)]|
 |StakingEpoch|uint32(4bytes)| Settlement cycle when current pledge amount is changed |
 |StakingBlockNum|uint64(8bytes)| Block height when pledge is initiated |
@@ -4270,7 +4270,7 @@ Returns: List
 |StakingAddress|20bytes| The account used when initiating the pledge (the pledge information can only be used for this operation in subsequent operations. When the pledge is cancelled, von will be returned to the account or the account lock information) |
 |BenefitAddress|20bytes| Revenue account for receiving block rewards and pledged rewards |
 |StakingTxIndex|uint32(4bytes)| Index of transactions when pledge is initiated |
-|ProgramVersion|uint32(4bytes)| The real version number of the PlatON process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
+|ProgramVersion|uint32(4bytes)| The real version number of the Bubble process of the pledged node (the interface for obtaining the version number is provided by the governance)  |
 |Status|uint32(4bytes)|The status of the candidate (the status is placed according to the `32bit` of` uint32`, multiple states can exist at the same time, and the value of multiple simultaneous state values is added [`0`: the node is available (32 bits are all 0); `1`: The node is unavailable (only the last bit is 1);` 2`: The node has a low block rate but does not meet the removal condition (only the penultimate bit is 1); `4`: The node Von is lower than the minimum pledge threshold (only the penultimate bit is 1); `8`: the node is reported as a double sign (only the penultimate bit is 1);` 16`: the node block rate is low and the removal condition is met (The penultimate bit is 1); `32`: the node actively initiates the revocation (only the penultimate bit is 1)]|
 |StakingEpoch|uint32(4bytes)| Settlement cycle when current pledge amount is changed |
 |StakingBlockNum|uint64(8bytes)| Block height when pledge is initiated |

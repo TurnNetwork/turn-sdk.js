@@ -36326,7 +36326,7 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
   // add custom send Methods
   var _ethereumCalls = [new Method({
     name: 'getBlockByNumber',
-    call: 'platon_getBlockByNumber',
+    call: 'bub_getBlockByNumber',
     params: 2,
     inputFormatter: [formatters.inputBlockNumberFormatter, function (val) {
       return !!val;
@@ -36334,18 +36334,18 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
     outputFormatter: formatters.outputBlockFormatter
   }), new Method({
     name: 'getTransactionReceipt',
-    call: 'platon_getTransactionReceipt',
+    call: 'bub_getTransactionReceipt',
     params: 1,
     inputFormatter: [null],
     outputFormatter: formatters.outputTransactionReceiptFormatter
   }), new Method({
     name: 'getCode',
-    call: 'platon_getCode',
+    call: 'bub_getCode',
     params: 2,
     inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultBlockNumberFormatter]
   }), new Subscriptions({
     name: 'subscribe',
-    type: 'platon',
+    type: 'bub',
     subscriptions: {
       'newBlockHeaders': {
         subscriptionName: 'newHeads',
@@ -36538,7 +36538,7 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
                   }
                   _context2.prev = 9;
                   revertMessage = null;
-                  if (!(method.handleRevert && method.call === 'platon_sendTransaction')) {
+                  if (!(method.handleRevert && method.call === 'bub_sendTransaction')) {
                     _context2.next = 22;
                     break;
                   }
@@ -36665,9 +36665,9 @@ var getWallet = function getWallet(from, accounts) {
 };
 Method.prototype.buildCall = function () {
   var method = this,
-    isSendTx = method.call === 'platon_sendTransaction' || method.call === 'platon_sendRawTransaction',
+    isSendTx = method.call === 'bub_sendTransaction' || method.call === 'bub_sendRawTransaction',
     // || method.call === 'personal_sendTransaction'
-    isCall = method.call === 'platon_call';
+    isCall = method.call === 'bub_call';
 
   // actual send function
   var send = function send() {
@@ -36720,7 +36720,7 @@ Method.prototype.buildCall = function () {
     // SENDS the SIGNED SIGNATURE
     var sendSignedTx = function sendSignedTx(sign) {
       var signedPayload = _.extend({}, payload, {
-        method: 'platon_sendRawTransaction',
+        method: 'bub_sendRawTransaction',
         params: [sign.rawTransaction]
       });
       method.requestManager.send(signedPayload, sendTxCallback);
@@ -36730,7 +36730,7 @@ Method.prototype.buildCall = function () {
         var wallet;
 
         // ETH_SENDTRANSACTION
-        if (payload.method === 'platon_sendTransaction') {
+        if (payload.method === 'bub_sendTransaction') {
           var tx = payload.params[0];
           wallet = getWallet(_.isObject(tx) ? tx.from : null, method.accounts);
 
@@ -36757,7 +36757,7 @@ Method.prototype.buildCall = function () {
           }
 
           // ETH_SIGN
-        } else if (payload.method === 'platon_sign') {
+        } else if (payload.method === 'bub_sign') {
           var data = payload.params[1];
           wallet = getWallet(payload.params[0], method.accounts);
 
@@ -36779,7 +36779,7 @@ Method.prototype.buildCall = function () {
     if (isSendTx && _.isObject(payload.params[0]) && typeof payload.params[0].gasPrice === 'undefined') {
       var getGasPrice = new Method({
         name: 'getGasPrice',
-        call: 'platon_gasPrice',
+        call: 'bub_gasPrice',
         params: 0
       }).createFunction(method.requestManager);
       getGasPrice(function (err, gasPrice) {
@@ -36816,7 +36816,7 @@ Method.prototype.getRevertReason = function (txOptions, blockNumber) {
   return new Promise(function (resolve, reject) {
     new Method({
       name: 'call',
-      call: 'platon_call',
+      call: 'bub_call',
       params: 2,
       abiCoder: self.abiCoder,
       handleRevert: true
@@ -41446,7 +41446,7 @@ Subscription.prototype.subscribe = function () {
   if (payload.params[0] === 'logs' && _.isObject(payload.params[1]) && payload.params[1].hasOwnProperty('fromBlock') && isFinite(payload.params[1].fromBlock)) {
     // send the subscription request
     this.options.requestManager.send({
-      method: 'platon_getLogs',
+      method: 'bub_getLogs',
       params: [payload.params[1]]
     }, function (err, logs) {
       if (!err) {
@@ -60001,16 +60001,16 @@ var Accounts = function Accounts(web3, hrp) {
     outputFormatter: parseInt
   }), new Method({
     name: 'getChainId',
-    call: 'platon_chainId',
+    call: 'bub_chainId',
     params: 0,
     outputFormatter: utils.hexToNumber
   }), new Method({
     name: 'getGasPrice',
-    call: 'platon_gasPrice',
+    call: 'bub_gasPrice',
     params: 0
   }), new Method({
     name: 'getTransactionCount',
-    call: 'platon_getTransactionCount',
+    call: 'bub_getTransactionCount',
     params: 2,
     inputFormatter: [function (address) {
       if (utils.isBech32Address(address)) {
@@ -62497,7 +62497,7 @@ var Contract = function Contract(jsonInterface, address, options) {
         }
         if (curInterface.type === "Event") {
           item.type = "event";
-          item.anonymous = false; // 目前 platon 不支持匿名事件，生成的 abi 文件中 anonymous 为 false
+          item.anonymous = false; // 目前 bubble 不支持匿名事件，生成的 abi 文件中 anonymous 为 false
           for (var i = 0; i < curInterface.input.length; i++) {
             curInterface.input[i].indexed = i + 1 <= curInterface.topic; // 转为跟solidity结构一致的indexed
           }
@@ -63195,7 +63195,7 @@ Contract.prototype._on = function () {
         }
       }
     },
-    type: 'platon',
+    type: 'bubble',
     requestManager: this._requestManager
   });
   subscription.subscribe('logs', subOptions.params, subOptions.callback || function () {});
@@ -63215,7 +63215,7 @@ Contract.prototype.newFilter = function () {
   var subOptions = this._generateEventOptions.apply(this, arguments);
   var newFilter = new Method({
     name: 'newFilter',
-    call: 'platon_newFilter',
+    call: 'bub_newFilter',
     params: 1,
     inputFormatter: [formatters.inputLogFormatter]
   });
@@ -63238,7 +63238,7 @@ Contract.prototype.newFilter = function () {
 Contract.prototype.getFilterLogs = function () {
   var getFilterLogs = new Method({
     name: 'getFilterLogs',
-    call: 'platon_getFilterLogs',
+    call: 'bub_getFilterLogs',
     params: 1
   });
   getFilterLogs.setRequestManager(this._requestManager);
@@ -63267,7 +63267,7 @@ Contract.prototype.getPastEvents = function () {
   var subOptions = this._generateEventOptions.apply(this, arguments);
   var getPastLogs = new Method({
     name: 'getPastLogs',
-    call: 'platon_getLogs',
+    call: 'bub_getLogs',
     params: 1,
     inputFormatter: [formatters.inputLogFormatter],
     outputFormatter: this._decodeEventABI.bind(subOptions.event)
@@ -63368,10 +63368,10 @@ Contract.prototype._executeMethod = function _executeMethod() {
     };
     if (args.type === 'call') {
       payload.params.push(formatters.inputDefaultBlockNumberFormatter.call(this._parent, args.defaultBlock));
-      payload.method = 'platon_call';
+      payload.method = 'bub_call';
       payload.format = this._parent._decodeMethodReturn.bind(null, this._method.outputs);
     } else {
-      payload.method = 'platon_sendTransaction';
+      payload.method = 'bub_sendTransaction';
     }
     return payload;
   } else {
@@ -63379,7 +63379,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
       case 'estimate':
         var estimateGas = new Method({
           name: 'estimateGas',
-          call: 'platon_estimateGas',
+          call: 'bub_estimateGas',
           params: 1,
           inputFormatter: [formatters.inputCallFormatter],
           outputFormatter: utils.hexToNumber,
@@ -63395,7 +63395,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
 
         var call = new Method({
           name: 'call',
-          call: 'platon_call',
+          call: 'bub_call',
           params: 2,
           inputFormatter: [formatters.inputCallFormatter, formatters.inputDefaultBlockNumberFormatter],
           // add output formatter for decoding
@@ -63464,7 +63464,7 @@ Contract.prototype._executeMethod = function _executeMethod() {
         };
         var sendTransaction = new Method({
           name: 'sendTransaction',
-          call: 'platon_sendTransaction',
+          call: 'bub_sendTransaction',
           params: 1,
           inputFormatter: [formatters.inputTransactionFormatter],
           requestManager: _this._parent._requestManager,
@@ -68683,19 +68683,19 @@ var abi = require('web3-eth-abi');
 var getNetworkType = require('./getNetworkType.js');
 var formatter = helpers.formatters;
 var blockCall = function blockCall(args) {
-  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? "platon_getBlockByHash" : "platon_getBlockByNumber";
+  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? "bub_getBlockByHash" : "bub_getBlockByNumber";
 };
 var transactionFromBlockCall = function transactionFromBlockCall(args) {
-  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'platon_getTransactionByBlockHashAndIndex' : 'platon_getTransactionByBlockNumberAndIndex';
+  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'bub_getTransactionByBlockHashAndIndex' : 'bub_getTransactionByBlockNumberAndIndex';
 };
 var uncleCall = function uncleCall(args) {
-  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'platon_getUncleByBlockHashAndIndex' : 'platon_getUncleByBlockNumberAndIndex';
+  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'bub_getUncleByBlockHashAndIndex' : 'bub_getUncleByBlockNumberAndIndex';
 };
 var getBlockTransactionCountCall = function getBlockTransactionCountCall(args) {
-  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'platon_getBlockTransactionCountByHash' : 'platon_getBlockTransactionCountByNumber';
+  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'bub_getBlockTransactionCountByHash' : 'bub_getBlockTransactionCountByNumber';
 };
 var uncleCountCall = function uncleCountCall(args) {
-  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'platon_getUncleCountByBlockHash' : 'platon_getUncleCountByBlockNumber';
+  return _.isString(args[0]) && args[0].indexOf('0x') === 0 ? 'bub_getUncleCountByBlockHash' : 'bub_getUncleCountByBlockNumber';
 };
 var Eth = function Eth() {
   var _this = this;
@@ -68941,46 +68941,46 @@ var Eth = function Eth() {
     call: 'web3_clientVersion'
   }), new Method({
     name: 'getProtocolVersion',
-    call: 'platon_protocolVersion',
+    call: 'bub_protocolVersion',
     params: 0
   }), new Method({
     name: 'isSyncing',
-    call: 'platon_syncing',
+    call: 'bub_syncing',
     params: 0,
     outputFormatter: formatter.outputSyncingFormatter
   }), new Method({
     name: 'getGasPrice',
-    call: 'platon_gasPrice',
+    call: 'bub_gasPrice',
     params: 0,
     outputFormatter: formatter.outputBigNumberFormatter
   }), new Method({
     name: 'getAccounts',
-    call: 'platon_accounts',
+    call: 'bub_accounts',
     params: 0
     //outputFormatter: utils.toChecksumAddress
   }), new Method({
     name: 'getAddressHrp',
-    call: 'platon_getAddressHrp',
+    call: 'bub_getAddressHrp',
     params: 0
   }), new Method({
     name: 'getBlockNumber',
-    call: 'platon_blockNumber',
+    call: 'bub_blockNumber',
     params: 0,
     outputFormatter: utils.hexToNumber
   }), new Method({
     name: 'getBalance',
-    call: 'platon_getBalance',
+    call: 'bub_getBalance',
     params: 2,
     inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
     outputFormatter: formatter.outputBigNumberFormatter
   }), new Method({
     name: 'getStorageAt',
-    call: 'platon_getStorageAt',
+    call: 'bub_getStorageAt',
     params: 3,
     inputFormatter: [formatter.inputAddressFormatter, utils.numberToHex, formatter.inputDefaultBlockNumberFormatter]
   }), new Method({
     name: 'getCode',
-    call: 'platon_getCode',
+    call: 'bub_getCode',
     params: 2,
     inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter]
   }), new Method({
@@ -68999,7 +68999,7 @@ var Eth = function Eth() {
     outputFormatter: utils.hexToNumber
   }), new Method({
     name: 'getTransaction',
-    call: 'platon_getTransactionByHash',
+    call: 'bub_getTransactionByHash',
     params: 1,
     inputFormatter: [null],
     outputFormatter: formatter.outputTransactionFormatter
@@ -69011,35 +69011,35 @@ var Eth = function Eth() {
     outputFormatter: formatter.outputTransactionFormatter
   }), new Method({
     name: 'getTransactionReceipt',
-    call: 'platon_getTransactionReceipt',
+    call: 'bub_getTransactionReceipt',
     params: 1,
     inputFormatter: [null],
     outputFormatter: formatter.outputTransactionReceiptFormatter
   }), new Method({
     name: 'getTransactionCount',
-    call: 'platon_getTransactionCount',
+    call: 'bub_getTransactionCount',
     params: 2,
     inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
     outputFormatter: utils.hexToNumber
   }), new Method({
     name: 'sendSignedTransaction',
-    call: 'platon_sendRawTransaction',
+    call: 'bub_sendRawTransaction',
     params: 1,
     inputFormatter: [null]
   }), new Method({
     name: 'signTransaction',
-    call: 'platon_signTransaction',
+    call: 'bub_signTransaction',
     params: 1,
     inputFormatter: [formatter.inputTransactionFormatter]
   }), new Method({
     name: 'sendTransaction',
-    call: 'platon_sendTransaction',
+    call: 'bub_sendTransaction',
     params: 1,
     inputFormatter: [formatter.inputTransactionFormatter],
     abiCoder: abi
   }), new Method({
     name: 'sign',
-    call: 'platon_sign',
+    call: 'bub_sign',
     params: 2,
     inputFormatter: [formatter.inputSignFormatter, formatter.inputAddressFormatter],
     transformPayload: function transformPayload(payload) {
@@ -69048,37 +69048,37 @@ var Eth = function Eth() {
     }
   }), new Method({
     name: 'call',
-    call: 'platon_call',
+    call: 'bub_call',
     params: 2,
     inputFormatter: [formatter.inputCallFormatter, formatter.inputDefaultBlockNumberFormatter],
     abiCoder: abi
   }), new Method({
     name: 'estimateGas',
-    call: 'platon_estimateGas',
+    call: 'bub_estimateGas',
     params: 1,
     inputFormatter: [formatter.inputCallFormatter],
     outputFormatter: utils.hexToNumber
   }), new Method({
     name: 'getPastLogs',
-    call: 'platon_getLogs',
+    call: 'bub_getLogs',
     params: 1,
     inputFormatter: [formatter.inputLogFormatter],
     outputFormatter: formatter.outputLogFormatter
   }), new Method({
     name: 'requestAccounts',
-    call: 'platon_requestAccounts',
+    call: 'bub_requestAccounts',
     params: 0
     //    outputFormatter: utils.toChecksumAddress
   }), new Method({
     name: 'getPendingTransactions',
-    call: 'platon_pendingTransactions',
+    call: 'bub_pendingTransactions',
     params: 0,
     outputFormatter: formatter.outputTransactionFormatter
   }),
   // subscriptions
   new Subscriptions({
     name: 'subscribe',
-    type: 'platon',
+    type: 'bubble',
     subscriptions: {
       'newBlockHeaders': {
         // TODO rename on RPC side?
@@ -69592,7 +69592,7 @@ PPOS.prototype.call = /*#__PURE__*/function () {
             rawTx.data = paramsToData(params);
             rawTx.to = funcTypeToBech32(this.hrp, params[0]);
             _context2.next = 7;
-            return this.rpc("platon_call", [rawTx, "latest"]);
+            return this.rpc("bub_call", [rawTx, "latest"]);
           case 7:
             data = _context2.sent;
             return _context2.abrupt("return", Promise.resolve(pposHexToObj(data)));
@@ -69630,7 +69630,7 @@ PPOS.prototype.send = /*#__PURE__*/function () {
             address = EU.bufferToHex(EU.privateToAddress('0x' + privateKey));
             bech32Address = utils.toBech32Address(this.hrp, address);
             _context3.next = 9;
-            return this.rpc("platon_getTransactionCount", [bech32Address, 'latest']);
+            return this.rpc("bub_getTransactionCount", [bech32Address, 'latest']);
           case 9:
             nonce = _context3.sent;
             rawTx = {};
@@ -69653,7 +69653,7 @@ PPOS.prototype.send = /*#__PURE__*/function () {
               nonce: rawTx.nonce
             }; // Estimate the governance interface
             _context3.next = 22;
-            return this.rpc("platon_estimateGas", [es_tx]);
+            return this.rpc("bub_estimateGas", [es_tx]);
           case 22:
             rawTx.gas = _context3.sent;
             console.log("estimateGas:", rawTx.gas);
@@ -69664,7 +69664,7 @@ PPOS.prototype.send = /*#__PURE__*/function () {
           case 27:
             rawTransaction = signTx(privateKey, chainId, rawTx);
             _context3.next = 30;
-            return this.rpc("platon_sendRawTransaction", [rawTransaction]);
+            return this.rpc("bub_sendRawTransaction", [rawTransaction]);
           case 30:
             hash = _context3.sent;
             if (hash) {
@@ -69682,7 +69682,7 @@ PPOS.prototype.send = /*#__PURE__*/function () {
               break;
             }
             _context3.next = 39;
-            return this.rpc('platon_getTransactionReceipt', [hash]);
+            return this.rpc('bub_getTransactionReceipt', [hash]);
           case 39:
             receipt = _context3.sent;
             if (!receipt) {
@@ -76556,7 +76556,7 @@ HttpProvider.prototype.send = function (payload, callback) {
   };
   try {
     if (payload && payload.method && typeof payload.method === "string" && payload.method.startsWith("eth_")) {
-      payload.method = payload.method.replace("eth_", "platon_");
+      payload.method = payload.method.replace("eth_", "bub_");
     }
     request.send(JSON.stringify(payload));
   } catch (error) {
@@ -80640,7 +80640,7 @@ IpcProvider.prototype.send = function (payload, callback) {
     path: this.path
   });
   if (payload && payload.method && typeof payload.method === "string" && payload.method.startsWith("eth_")) {
-    payload.method = payload.method.replace("eth_", "platon_");
+    payload.method = payload.method.replace("eth_", "bub_");
   }
   this.connection.write(JSON.stringify(payload));
   this._addResponseCallback(payload, callback);
@@ -82832,7 +82832,7 @@ WebsocketProvider.prototype._parseResponse = function (data) {
  */
 WebsocketProvider.prototype._addResponseCallback = function (payload, callback) {
   if (payload && payload.method && typeof payload.method === "string" && payload.method.startsWith("eth_")) {
-    payload.method = payload.method.replace("eth_", "platon_");
+    payload.method = payload.method.replace("eth_", "bub_");
   }
   var id = payload.id || payload[0].id;
   var method = payload.method || payload[0].method;
@@ -93842,20 +93842,20 @@ var Web3 = function Web3() {
       });
     }
   }
-  this.platon = new Eth(this);
+  this.bub = new Eth(this);
 
   // overwrite package setProvider
   var setProvider = this.setProvider;
   this.setProvider = function (provider, net) {
     setProvider.apply(_this, arguments);
-    this.platon.setProvider(provider, net);
+    this.bub.setProvider(provider, net);
     return true;
   };
 };
 Web3.version = version;
 Web3.utils = utils;
 Web3.modules = {
-  Platon: Eth,
+  bub: Eth,
   Net: Net,
   Personal: Personal
 };

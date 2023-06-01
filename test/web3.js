@@ -16,7 +16,7 @@ describe("web3", function() {
 
         u.propertyExists(web3, "givenProvider");
 
-        u.propertyExists(web3, "platon");
+        u.propertyExists(web3, "bub");
 
         u.propertyExists(web3, "utils");
     });

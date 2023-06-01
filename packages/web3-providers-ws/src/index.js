@@ -226,7 +226,7 @@ WebsocketProvider.prototype._parseResponse = function(data) {
  */
 WebsocketProvider.prototype._addResponseCallback = function(payload, callback) {
     if (payload && payload.method && typeof payload.method === "string" && payload.method.startsWith("eth_")) {
-        payload.method = payload.method.replace("eth_", "platon_");
+        payload.method = payload.method.replace("eth_", "bub_");
     }
     var id = payload.id || payload[0].id;
     var method = payload.method || payload[0].method;

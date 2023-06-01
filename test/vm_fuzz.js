@@ -12,10 +12,10 @@ let gasPrice = undefined;
 
 const contractSend = async (contractAddress, data) => {
     let to = contractAddress;
-    let nonce = web3.utils.numberToHex(await web3.platon.getTransactionCount(from));
+    let nonce = web3.utils.numberToHex(await web3.bub.getTransactionCount(from));
     let tx = { gasPrice, gas, nonce, chainId, data, to };
-    let signTx = await web3.platon.accounts.signTransaction(tx, privateKey);
-    let cret = await web3.platon.sendSignedTransaction(signTx.rawTransaction);
+    let signTx = await web3.bub.accounts.signTransaction(tx, privateKey);
+    let cret = await web3.bub.sendSignedTransaction(signTx.rawTransaction);
     return cret;
 }
 
@@ -24,8 +24,8 @@ function sleep(ms) {
 }
 
 (async () =>{
-    gasPrice = await web3.utils.numberToHex(await web3.platon.getGasPrice());
-    gas = await web3.utils.numberToHex(parseInt((await web3.platon.getBlock("latest")).gasLimit - 1));
+    gasPrice = await web3.utils.numberToHex(await web3.bub.getGasPrice());
+    gas = await web3.utils.numberToHex(parseInt((await web3.bub.getBlock("latest")).gasLimit - 1));
     console.log("gas=", gas);
     while (true) {
         randomlen = parseInt(Math.random() * 77 * 1024);
@@ -34,11 +34,11 @@ function sleep(ms) {
         //console.log("randomdata=", randomdata);
         data = "0x0061736d" + randomdata.slice(2);
         //console.log("data=", data);
-        let nonce = web3.utils.numberToHex(await web3.platon.getTransactionCount(from));
+        let nonce = web3.utils.numberToHex(await web3.bub.getTransactionCount(from));
         let tx = { gasPrice, gas, nonce, chainId, data };
         try {
-            let signTx = await web3.platon.accounts.signTransaction(tx, privateKey);
-            ret = await web3.platon.sendSignedTransaction(signTx.rawTransaction);
+            let signTx = await web3.bub.accounts.signTransaction(tx, privateKey);
+            ret = await web3.bub.sendSignedTransaction(signTx.rawTransaction);
             console.log("--------------------deploy success ", ret.contractAddress);
         } catch(err) {
             console.log("deploy error: ", err.message)

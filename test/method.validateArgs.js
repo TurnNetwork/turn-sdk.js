@@ -9,7 +9,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something",
+                call: "bub_something",
                 params: 1
             });
 
@@ -33,7 +33,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something",
+                call: "bub_something",
                 params: 2
             });
 

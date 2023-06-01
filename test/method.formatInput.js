@@ -12,7 +12,7 @@ describe("lib/web3/method", function() {
 
             var method = new Method({
                 name: "something",
-                call: "platon_something",
+                call: "bub_something",
                 inputFormatter: [star, star, star]
             });
             var args = ["1", "2", "3"];
@@ -29,7 +29,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something"
+                call: "bub_something"
             });
             var args = [1, 2, 3];
 

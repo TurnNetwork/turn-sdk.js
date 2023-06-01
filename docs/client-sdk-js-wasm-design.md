@@ -1,10 +1,10 @@
 ## 合约实例化修改
-对于Solidity的合约`web3.platon.Contract`类简化了与以太坊区块链上智能合约的交互。创建合约对象时，只需指定相应智能合约的json接口，web3就可以自动地将所有的调用转换为底层基于RPC的ABI调用。通过web3的封装，与智能合约的交互就像与JavaScript对象一样简单。
+对于Solidity的合约`web3.bub.Contract`类简化了与以太坊区块链上智能合约的交互。创建合约对象时，只需指定相应智能合约的json接口，web3就可以自动地将所有的调用转换为底层基于RPC的ABI调用。通过web3的封装，与智能合约的交互就像与JavaScript对象一样简单。
 
 实例化一个新的合约对象：
 
 ```
-new web3.platon.Contract(jsonInterface[, address][, options])
+new web3.bub.Contract(jsonInterface[, address][, options])
 ```
 
 参数：

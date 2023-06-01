@@ -33,8 +33,8 @@ var core = require('web3-core');
 var Eth = require('web3-eth');
 var Net = require('web3-net');
 var Personal = require('web3-eth-personal');
-var utils = require('@platonnetwork/web3-utils');
-var PPOS = require('@platonnetwork/web3-ppos');
+var utils = require('@bubble/web3-utils');
+var PPOS = require('@bubble/web3-ppos');
 
 var Web3 = function Web3() {
     var _this = this;
@@ -54,13 +54,13 @@ var Web3 = function Web3() {
         }
     }
 
-    this.platon = new Eth(this);
+    this.bub = new Eth(this);
 
     // overwrite package setProvider
     var setProvider = this.setProvider;
     this.setProvider = function (provider, net) {
         setProvider.apply(_this, arguments);
-        this.platon.setProvider(provider, net);
+        this.bub.setProvider(provider, net);
 
         return true;
     };
@@ -69,7 +69,7 @@ var Web3 = function Web3() {
 Web3.version = version;
 Web3.utils = utils;
 Web3.modules = {
-    Platon: Eth,
+    bub: Eth,
     Net: Net,
     Personal: Personal,
 };

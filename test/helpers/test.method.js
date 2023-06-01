@@ -13,14 +13,14 @@ var useLocalWallet = function (test, provider, web3) {
     provider.injectResult(1);
     provider.injectValidation(function (payload) {
         assert.equal(payload.jsonrpc, '2.0');
-        assert.equal(payload.method, 'platon_chainId');
+        assert.equal(payload.method, 'bub_chainId');
         assert.deepEqual(payload.params, []);
     });
 
     provider.injectResult('0xa');
     provider.injectValidation(function (payload) {
         assert.equal(payload.jsonrpc, '2.0');
-        assert.equal(payload.method, 'platon_getTransactionCount');
+        assert.equal(payload.method, 'bub_getTransactionCount');
         assert.deepEqual(payload.params, [test.walletFrom, "latest"]);
     });
 };
@@ -76,7 +76,7 @@ var runTests = function (obj, method, tests) {
                     if(test.notification) {
                         provider.injectResult(null);
                         provider.injectValidation(function (payload) {
-                            assert.equal(payload.method, 'platon_getTransactionReceipt');
+                            assert.equal(payload.method, 'bub_getTransactionReceipt');
                         });
 
                         provider.injectResult(clone(test.result));

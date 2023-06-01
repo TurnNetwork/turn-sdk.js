@@ -1,5 +1,5 @@
 {
-  "name": "@platonnetwork/web3-ppos",
+  "name": "@bubble/web3-ppos",
   "version": "0.16.1",
   "description": "ppos api",
   "main": "src/index.js",
@@ -13,6 +13,6 @@
     "big-integer": "^1.6.51",
     "ethereumjs-tx": "^2.1.2",
     "rlp": " 2.2.6",
-    "@platonnetwork/web3-utils": "0.16.1"
+    "@bubble/web3-utils": "0.16.1"
   }
 }

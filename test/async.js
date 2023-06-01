@@ -19,7 +19,7 @@ var tests = [{
     }, 'latest'],
     result: '0xb',
     formattedResult: '0xb',
-    call: 'platon_' + method
+    call: 'bub_' + method
 }];
 
 describe('async', function () {
@@ -34,7 +34,7 @@ describe('async', function () {
                 assert.deepEqual(payload.params, test.formattedInput);
             });
 
-            web3.platon[method](test.input, function(error, result){
+            web3.bub[method](test.input, function(error, result){
 
                 // then
                 assert.isNull(error);
@@ -57,7 +57,7 @@ describe('async', function () {
             });
 
             // when
-            web3.platon[method](test.input)
+            web3.bub[method](test.input)
                 .then(function (result) {
 
                     // then
@@ -84,7 +84,7 @@ describe('async', function () {
             });
 
             // when
-            web3.platon[method](test.input, function (error, result) {
+            web3.bub[method](test.input, function (error, result) {
 
                 // then
                 assert.isUndefined(result);
@@ -113,7 +113,7 @@ describe('async', function () {
             });
 
             // when
-            web3.platon[method](test.input)
+            web3.bub[method](test.input)
                 .catch(function (error) {
 
                     // then

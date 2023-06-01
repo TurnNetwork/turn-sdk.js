@@ -214,7 +214,7 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
     var _ethereumCalls = [
         new Method({
             name: 'getBlockByNumber',
-            call: 'platon_getBlockByNumber',
+            call: 'bub_getBlockByNumber',
             params: 2,
             inputFormatter: [formatters.inputBlockNumberFormatter, function (val) {
                 return !!val;
@@ -223,20 +223,20 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
         }),
         new Method({
             name: 'getTransactionReceipt',
-            call: 'platon_getTransactionReceipt',
+            call: 'bub_getTransactionReceipt',
             params: 1,
             inputFormatter: [null],
             outputFormatter: formatters.outputTransactionReceiptFormatter
         }),
         new Method({
             name: 'getCode',
-            call: 'platon_getCode',
+            call: 'bub_getCode',
             params: 2,
             inputFormatter: [formatters.inputAddressFormatter, formatters.inputDefaultBlockNumberFormatter]
         }),
         new Subscriptions({
             name: 'subscribe',
-            type: 'platon',
+            type: 'bubble',
             subscriptions: {
                 'newBlockHeaders': {
                     subscriptionName: 'newHeads', // replace subscription with this name
@@ -413,8 +413,8 @@ Method.prototype._confirmTransaction = function (defer, result, payload) {
                                 try {
                                     var revertMessage = null;
 
-                                    if (method.handleRevert && method.call === 'platon_sendTransaction') {
-                                        // Get revert reason string with platon_call
+                                    if (method.handleRevert && method.call === 'bub_sendTransaction') {
+                                        // Get revert reason string with bub_call
                                         revertMessage = await method.getRevertReason(
                                             payload.params[0],
                                             receipt.blockNumber
@@ -556,8 +556,8 @@ var getWallet = function (from, accounts) {
 
 Method.prototype.buildCall = function () {
     var method = this,
-        isSendTx = (method.call === 'platon_sendTransaction' || method.call === 'platon_sendRawTransaction'), // || method.call === 'personal_sendTransaction'
-        isCall = (method.call === 'platon_call');
+        isSendTx = (method.call === 'bub_sendTransaction' || method.call === 'bub_sendRawTransaction'), // || method.call === 'personal_sendTransaction'
+        isCall = (method.call === 'bub_call');
 
     // actual send function
     var send = function () {
@@ -625,7 +625,7 @@ Method.prototype.buildCall = function () {
         var sendSignedTx = function (sign) {
 
             var signedPayload = _.extend({}, payload, {
-                method: 'platon_sendRawTransaction',
+                method: 'bub_sendRawTransaction',
                 params: [sign.rawTransaction]
             });
 
@@ -639,7 +639,7 @@ Method.prototype.buildCall = function () {
                 var wallet;
 
                 // ETH_SENDTRANSACTION
-                if (payload.method === 'platon_sendTransaction') {
+                if (payload.method === 'bub_sendTransaction') {
                     var tx = payload.params[0];
                     wallet = getWallet((_.isObject(tx)) ? tx.from : null, method.accounts);
 
@@ -674,7 +674,7 @@ Method.prototype.buildCall = function () {
                     }
 
                     // ETH_SIGN
-                } else if (payload.method === 'platon_sign') {
+                } else if (payload.method === 'bub_sign') {
                     var data = payload.params[1];
                     wallet = getWallet(payload.params[0], method.accounts);
 
@@ -702,7 +702,7 @@ Method.prototype.buildCall = function () {
 
             var getGasPrice = (new Method({
                 name: 'getGasPrice',
-                call: 'platon_gasPrice',
+                call: 'bub_gasPrice',
                 params: 0
             })).createFunction(method.requestManager);
 
@@ -745,7 +745,7 @@ Method.prototype.getRevertReason = function (txOptions, blockNumber) {
     return new Promise(function (resolve, reject) {
         (new Method({
             name: 'call',
-            call: 'platon_call',
+            call: 'bub_call',
             params: 2,
             abiCoder: self.abiCoder,
             handleRevert: true

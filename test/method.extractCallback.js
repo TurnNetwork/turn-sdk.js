@@ -8,7 +8,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something"
+                call: "bub_something"
             });
             var callback = function() {};
             var args = [1, callback];
@@ -25,7 +25,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something"
+                call: "bub_something"
             });
             var callback = new Function();
             var args = [1, callback];
@@ -42,7 +42,7 @@ describe("lib/web3/method", function() {
             // given
             var method = new Method({
                 name: "something",
-                call: "platon_something"
+                call: "bub_something"
             });
             var args = [1, 2];
 

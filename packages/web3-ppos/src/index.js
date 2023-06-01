@@ -5,7 +5,7 @@ var BigInteger = require("big-integer");
 var Common = require('ethereumjs-common');
 var EthereumTx = require('ethereumjs-tx');
 var axios = require('axios');
-var utils = require('@platonnetwork/web3-utils');
+var utils = require('@bubble/web3-utils');
 const paramsOrder = {
     '1000': [ 'typ', 'benefitAddress', 'nodeId', 'externalId', 'nodeName', 'website', 'details', 'amount', 'rewardPer', 'programVersion', 'programVersionSign', 'blsPubKey', 'blsProof' ],
     '1001': [ 'benefitAddress', 'nodeId', 'rewardPer', 'externalId', 'nodeName', 'website', 'details' ],
@@ -271,7 +271,7 @@ PPOS.prototype.call = async function (params) {
         params = objToParams(params);
         rawTx.data = paramsToData(params);
         rawTx.to = funcTypeToBech32(this.hrp, params[ 0 ]);
-        let data = await this.rpc("platon_call", [ rawTx, "latest" ]);
+        let data = await this.rpc("bub_call", [ rawTx, "latest" ]);
         return Promise.resolve(pposHexToObj(data));
     } catch (error) {
         return Promise.reject(error);
@@ -286,7 +286,7 @@ PPOS.prototype.send = async function (params, other) {
         let funcType;
         let address = EU.bufferToHex(EU.privateToAddress(Buffer.from(privateKey, 'hex')));
         var bech32Address = utils.toBech32Address(this.hrp, address)
-        let nonce = await this.rpc("platon_getTransactionCount", [ bech32Address, 'latest' ]);
+        let nonce = await this.rpc("bub_getTransactionCount", [ bech32Address, 'latest' ]);
         let rawTx = {};
         funcType = params[ 'funcType' ]
         params = objToParams(params);
@@ -305,7 +305,7 @@ PPOS.prototype.send = async function (params, other) {
                 nonce: rawTx.nonce
             };
             // Estimate the governance interface
-            rawTx.gas = await this.rpc("platon_estimateGas", [ es_tx ])
+            rawTx.gas = await this.rpc("bub_estimateGas", [ es_tx ])
             console.log("estimateGas:", rawTx.gas);
         }
         else {
@@ -313,14 +313,14 @@ PPOS.prototype.send = async function (params, other) {
         }
 
         let rawTransaction = signTx(privateKey, chainId, rawTx);
-        let hash = await this.rpc("platon_sendRawTransaction", [ rawTransaction ]);
+        let hash = await this.rpc("bub_sendRawTransaction", [ rawTransaction ]);
         if (!hash) return Promise.reject('no hash');
 
         let retry = (other && other.retry) || this.retry || 600;
         let interval = (other && other.interval) || this.interval || 100;
         const errMsg = `getTransactionReceipt txHash ${hash} interval ${interval}ms by ${retry} retry failed`;
         while (retry) {
-            const receipt = await this.rpc('platon_getTransactionReceipt', [ hash ]);
+            const receipt = await this.rpc('bub_getTransactionReceipt', [ hash ]);
             if (receipt) {
                 decodeBlockLogs(receipt, funcType.toString());
                 return Promise.resolve(receipt);

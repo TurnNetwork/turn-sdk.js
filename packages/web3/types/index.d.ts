@@ -40,7 +40,7 @@ export default class Web3 {
     static readonly providers: Providers;
 
     utils: Utils;
-    platon: Eth;
+    bub: Eth;
     version: string;
     static readonly version: string;
     static readonly utils: Utils;
@@ -48,7 +48,7 @@ export default class Web3 {
 }
 
 export interface Modules {
-    Platon: new (provider: provider, net: net.Socket) => Eth;
+    bub: new (provider: provider, net: net.Socket) => Eth;
     Net: new (provider: provider, net: net.Socket) => Network;
     Personal: new (provider: provider, net: net.Socket) => Personal;
 }

@@ -68,18 +68,18 @@ var Accounts = function Accounts(web3, hrp) {
         }),
         new Method({
             name: 'getChainId',
-            call: 'platon_chainId',
+            call: 'bub_chainId',
             params: 0,
             outputFormatter: utils.hexToNumber
         }),
         new Method({
             name: 'getGasPrice',
-            call: 'platon_gasPrice',
+            call: 'bub_gasPrice',
             params: 0
         }),
         new Method({
             name: 'getTransactionCount',
-            call: 'platon_getTransactionCount',
+            call: 'bub_getTransactionCount',
             params: 2,
             inputFormatter: [function(address) {
                 if (utils.isBech32Address(address)) {

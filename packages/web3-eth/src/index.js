@@ -41,23 +41,23 @@ var formatter = helpers.formatters;
 
 
 var blockCall = function (args) {
-    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? "platon_getBlockByHash" : "platon_getBlockByNumber";
+    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? "bub_getBlockByHash" : "bub_getBlockByNumber";
 };
 
 var transactionFromBlockCall = function (args) {
-    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'platon_getTransactionByBlockHashAndIndex' : 'platon_getTransactionByBlockNumberAndIndex';
+    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'bub_getTransactionByBlockHashAndIndex' : 'bub_getTransactionByBlockNumberAndIndex';
 };
 
 var uncleCall = function (args) {
-    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'platon_getUncleByBlockHashAndIndex' : 'platon_getUncleByBlockNumberAndIndex';
+    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'bub_getUncleByBlockHashAndIndex' : 'bub_getUncleByBlockNumberAndIndex';
 };
 
 var getBlockTransactionCountCall = function (args) {
-    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'platon_getBlockTransactionCountByHash' : 'platon_getBlockTransactionCountByNumber';
+    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'bub_getBlockTransactionCountByHash' : 'bub_getBlockTransactionCountByNumber';
 };
 
 var uncleCountCall = function (args) {
-    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'platon_getUncleCountByBlockHash' : 'platon_getUncleCountByBlockNumber';
+    return (_.isString(args[0]) && args[0].indexOf('0x') === 0) ? 'bub_getUncleCountByBlockHash' : 'bub_getUncleCountByBlockNumber';
 };
 
 
@@ -316,54 +316,54 @@ var Eth = function Eth() {
         }),
         new Method({
             name: 'getProtocolVersion',
-            call: 'platon_protocolVersion',
+            call: 'bub_protocolVersion',
             params: 0
         }),
         new Method({
             name: 'isSyncing',
-            call: 'platon_syncing',
+            call: 'bub_syncing',
             params: 0,
             outputFormatter: formatter.outputSyncingFormatter
         }),
         new Method({
             name: 'getGasPrice',
-            call: 'platon_gasPrice',
+            call: 'bub_gasPrice',
             params: 0,
             outputFormatter: formatter.outputBigNumberFormatter
         }),
         new Method({
             name: 'getAccounts',
-            call: 'platon_accounts',
+            call: 'bub_accounts',
             params: 0
             //outputFormatter: utils.toChecksumAddress
         }),
         new Method({
             name: 'getAddressHrp',
-            call: 'platon_getAddressHrp',
+            call: 'bub_getAddressHrp',
             params: 0
         }),
         new Method({
             name: 'getBlockNumber',
-            call: 'platon_blockNumber',
+            call: 'bub_blockNumber',
             params: 0,
             outputFormatter: utils.hexToNumber
         }),
         new Method({
             name: 'getBalance',
-            call: 'platon_getBalance',
+            call: 'bub_getBalance',
             params: 2,
             inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
             outputFormatter: formatter.outputBigNumberFormatter
         }),
         new Method({
             name: 'getStorageAt',
-            call: 'platon_getStorageAt',
+            call: 'bub_getStorageAt',
             params: 3,
             inputFormatter: [formatter.inputAddressFormatter, utils.numberToHex, formatter.inputDefaultBlockNumberFormatter]
         }),
         new Method({
             name: 'getCode',
-            call: 'platon_getCode',
+            call: 'bub_getCode',
             params: 2,
             inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter]
         }),
@@ -383,7 +383,7 @@ var Eth = function Eth() {
         }),
         new Method({
             name: 'getTransaction',
-            call: 'platon_getTransactionByHash',
+            call: 'bub_getTransactionByHash',
             params: 1,
             inputFormatter: [null],
             outputFormatter: formatter.outputTransactionFormatter
@@ -397,40 +397,40 @@ var Eth = function Eth() {
         }),
         new Method({
             name: 'getTransactionReceipt',
-            call: 'platon_getTransactionReceipt',
+            call: 'bub_getTransactionReceipt',
             params: 1,
             inputFormatter: [null],
             outputFormatter: formatter.outputTransactionReceiptFormatter
         }),
         new Method({
             name: 'getTransactionCount',
-            call: 'platon_getTransactionCount',
+            call: 'bub_getTransactionCount',
             params: 2,
             inputFormatter: [formatter.inputAddressFormatter, formatter.inputDefaultBlockNumberFormatter],
             outputFormatter: utils.hexToNumber
         }),
         new Method({
             name: 'sendSignedTransaction',
-            call: 'platon_sendRawTransaction',
+            call: 'bub_sendRawTransaction',
             params: 1,
             inputFormatter: [null]
         }),
         new Method({
             name: 'signTransaction',
-            call: 'platon_signTransaction',
+            call: 'bub_signTransaction',
             params: 1,
             inputFormatter: [formatter.inputTransactionFormatter]
         }),
         new Method({
             name: 'sendTransaction',
-            call: 'platon_sendTransaction',
+            call: 'bub_sendTransaction',
             params: 1,
             inputFormatter: [formatter.inputTransactionFormatter],
             abiCoder: abi
         }),
         new Method({
             name: 'sign',
-            call: 'platon_sign',
+            call: 'bub_sign',
             params: 2,
             inputFormatter: [formatter.inputSignFormatter, formatter.inputAddressFormatter],
             transformPayload: function (payload) {
@@ -440,34 +440,34 @@ var Eth = function Eth() {
         }),
         new Method({
             name: 'call',
-            call: 'platon_call',
+            call: 'bub_call',
             params: 2,
             inputFormatter: [formatter.inputCallFormatter, formatter.inputDefaultBlockNumberFormatter],
             abiCoder: abi
         }),
         new Method({
             name: 'estimateGas',
-            call: 'platon_estimateGas',
+            call: 'bub_estimateGas',
             params: 1,
             inputFormatter: [formatter.inputCallFormatter],
             outputFormatter: utils.hexToNumber
         }),
         new Method({
             name: 'getPastLogs',
-            call: 'platon_getLogs',
+            call: 'bub_getLogs',
             params: 1,
             inputFormatter: [formatter.inputLogFormatter],
             outputFormatter: formatter.outputLogFormatter
         }),
         new Method({
             name: 'requestAccounts',
-            call: 'platon_requestAccounts',
+            call: 'bub_requestAccounts',
             params: 0
         //    outputFormatter: utils.toChecksumAddress
         }),
         new Method({
             name: 'getPendingTransactions',
-            call: 'platon_pendingTransactions',
+            call: 'bub_pendingTransactions',
             params: 0,
             outputFormatter: formatter.outputTransactionFormatter
         }),
@@ -475,7 +475,7 @@ var Eth = function Eth() {
         // subscriptions
         new Subscriptions({
             name: 'subscribe',
-            type: 'platon',
+            type: 'bubble',
             subscriptions: {
                 'newBlockHeaders': {
                     // TODO rename on RPC side?

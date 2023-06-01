@@ -1,6 +1,6 @@
 var chai = require("chai");
 var assert = chai.assert;
-var Platon = require("../packages/web3-eth/");
+var Bubble = require("../packages/web3-eth/");
 
 var name = "event1";
 var address = "0xffddb67890123456789012345678901234567890";
@@ -237,8 +237,8 @@ describe("lib/web3/event", function() {
     describe("decode", function() {
         tests.forEach(function(test, index) {
             it("test no: " + index, function() {
-                var platon = new Platon();
-                var contract = new platon.Contract([test.abi], address);
+                var bub = new Bubble();
+                var contract = new bub.Contract([test.abi], address);
 
                 var result = contract._decodeEventABI.call(test.abi, test.data);
                 assert.deepEqual(result, test.expected);

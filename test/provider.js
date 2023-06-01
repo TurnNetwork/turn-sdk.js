@@ -2,7 +2,7 @@ var chai = require("chai");
 var assert = chai.assert;
 var net = require("net");
 
-var Platon = require("../packages/web3-eth");
+var Bubble = require("../packages/web3-eth");
 var Net = require("../packages/web3-net");
 var Web3 = require("../packages/web3");
 
@@ -87,36 +87,36 @@ var tests = [
     {
         providerParams: ["http://localhost:8545"],
         providerType: "HttpProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["HTTP://localhost:8545"],
         providerType: "HttpProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["ws://localhost:8546"],
         providerType: "WebsocketProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["WS://localhost:8546"],
         providerType: "WebsocketProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["/.ethereum/my/path/geth.ipc", net],
         providerType: "IpcProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["\\\\.\\pipe\\geth.ipc", net],
         providerType: "IpcProvider",
-        package: Platon
+        package: Bubble
     },
     {
         providerParams: ["://hello.com:1234"],
-        package: Platon,
+        package: Bubble,
         error: true
     }
 ];
