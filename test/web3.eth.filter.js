@@ -21,7 +21,7 @@ var tests = [{
     }],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newFilter'
+    call: 'bub_newFilter'
 },{
     args: [{
         fromBlock: 'latest',
@@ -36,19 +36,19 @@ var tests = [{
     }],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newFilter'
+    call: 'bub_newFilter'
 },{
     args: ['latest'],
     formattedArgs: [],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newBlockFilter'
+    call: 'bub_newBlockFilter'
 },{
     args: ['pending'],
     formattedArgs: [],
     result: '0xf',
     formattedResult: '0xf',
-    call: 'eth_newPendingTransactionFilter'
+    call: 'bub_newPendingTransactionFilter'
 }];
 
 describe('web3.eth', function () {
@@ -78,7 +78,7 @@ describe('web3.eth', function () {
                    provider.injectResult(logs);
                    provider.injectValidation(function (payload) {
                        assert.equal(payload.jsonrpc, '2.0');
-                       assert.equal(payload.method, 'eth_getFilterLogs');
+                       assert.equal(payload.method, 'bub_getFilterLogs');
                        assert.deepEqual(payload.params, [test.formattedResult]);
                    });
 

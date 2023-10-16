@@ -33,9 +33,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'eth_getBalance');
+                assert.equal(first.method, 'bub_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'eth_getBalance');
+                assert.equal(second.method, 'bub_getBalance');
                 assert.deepEqual(second.params, ['0x0000000000000000000000000000000000000005', 'latest']);
             });
 
@@ -71,7 +71,7 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'eth_accounts');
+                assert.equal(first.method, 'bub_accounts');
                 assert.deepEqual(first.params, []);
                 assert.equal(second.method, 'net_peerCount');
                 assert.deepEqual(second.params, []);
@@ -124,9 +124,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'eth_getBalance');
+                assert.equal(first.method, 'bub_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'eth_call');
+                assert.equal(second.method, 'bub_call');
                 assert.deepEqual(second.params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'
@@ -182,9 +182,9 @@ describe('lib/web3/batch', function () {
                 var first = payload[0];
                 var second = payload[1];
 
-                assert.equal(first.method, 'eth_getBalance');
+                assert.equal(first.method, 'bub_getBalance');
                 assert.deepEqual(first.params, ['0x0000000000000000000000000000000000000000', 'latest']);
-                assert.equal(second.method, 'eth_call');
+                assert.equal(second.method, 'bub_call');
                 assert.deepEqual(second.params, [{
                     'to': '0x1000000000000000000000000000000000000001',
                     'data': '0xe3d670d70000000000000000000000001000000000000000000000000000000000000001'

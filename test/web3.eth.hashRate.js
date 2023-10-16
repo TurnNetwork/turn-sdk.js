@@ -9,7 +9,7 @@ var method = 'hashrate';
 var tests = [{
     result: '0x788a8',
     formattedResult: 493736,
-    call: 'eth_'+ method
+    call: 'bub_'+ method
 }];
 
 describe('web3.eth', function () {

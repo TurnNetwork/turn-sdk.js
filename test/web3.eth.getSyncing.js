@@ -18,7 +18,7 @@ describe('eth', function () {
             });
             provider.injectValidation(function(payload) {
                 assert.equal(payload.jsonrpc, '2.0', 'failed');
-                assert.equal(payload.method, 'eth_syncing');
+                assert.equal(payload.method, 'bub_syncing');
             });
 
             // call
@@ -39,7 +39,7 @@ describe('eth', function () {
             provider.injectResult(false);
             provider.injectValidation(function(payload) {
                 assert.equal(payload.jsonrpc, '2.0', 'failed');
-                assert.equal(payload.method, 'eth_syncing');
+                assert.equal(payload.method, 'bub_syncing');
             });
 
             // call

@@ -18,7 +18,7 @@ var tests = [{
         currentBlock: 11,
         highestBlock: 11
     },
-    call: 'eth_syncing'
+    call: 'bub_syncing'
 }, {
     args: [],
     formattedArgs: [],
@@ -36,7 +36,7 @@ var tests = [{
         knownStates: 11,
         pulledStates: 11
     },
-    call: 'eth_syncing'
+    call: 'bub_syncing'
 }];
 
 describe('eth', function () {

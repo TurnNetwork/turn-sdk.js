@@ -10,7 +10,7 @@ var method = 'gasPrice';
 var tests = [{
     result: '0x15f90',
     formattedResult: new BigNumber(90000),
-    call: 'eth_'+ method
+    call: 'bub_'+ method
 }];
 
 describe('web3.eth', function () {

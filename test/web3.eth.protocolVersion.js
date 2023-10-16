@@ -8,7 +8,7 @@ var method = 'protocolVersion';
 
 var tests = [{
     result: ['1234'],
-    call: 'eth_'+ method
+    call: 'bub_'+ method
 }];
 
 describe('eth.protocolVersion', function () {
