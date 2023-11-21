@@ -36,6 +36,11 @@ var Net = function () {
 
     [
         new Method({
+            name: 'availablePorts',
+            call: 'net_availablePorts',
+            params: 3
+        }),
+        new Method({
             name: 'getId',
             call: 'net_version',
             params: 0,

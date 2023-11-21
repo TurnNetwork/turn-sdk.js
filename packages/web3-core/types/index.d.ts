@@ -238,6 +238,10 @@ export class NetworkBase {
         callback?: (error: Error, returnValue: string) => void
     ): Promise<string>;
 
+    availablePorts(
+        callback?: (error: Error, ports: Int32Array) => void
+    ): Promise<number>;
+
     getId(callback?: (error: Error, id: number) => void): Promise<number>;
 
     isListening(
